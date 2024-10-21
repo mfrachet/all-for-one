@@ -1,16 +1,11 @@
 import "dotenv/config";
-import { openai } from "./openAi";
 import { computePrompt } from "./promps/compute/compute.prompt";
-(async () => {
-  const response = await openai.chat.completions.create({
-    model: "gpt-4o",
-    messages: [
-      {
-        role: "user",
-        content: computePrompt(`Random data for a line chart`),
-      },
-    ],
-  });
+import { getOpenAIResponse } from "./getOpenAIResponse";
 
-  console.log(response.choices[0].message.content);
+(async () => {
+  const response = await getOpenAIResponse(
+    computePrompt(`Random data for a line chart`)
+  );
+
+  console.log("lol", response);
 })();

@@ -3,8 +3,10 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "main": "src/index.ts",
+  "module": "src/index.ts",
   "scripts": {
-    "dev": "tsx src/dev.entry.ts"
+    "dev:ai": "tsx src/dev.entry.ts"
   },
   "devDependencies": {
     "tsx": "^4.19.1"

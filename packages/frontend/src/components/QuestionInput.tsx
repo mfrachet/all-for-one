@@ -1,15 +1,21 @@
 import { Send } from "lucide-react";
 import { useRef } from "react";
 
-export const QuestionInput = () => {
+export const QuestionInput = ({
+  onSubmit,
+}: {
+  onSubmit: (input: string) => void;
+}) => {
   const btnRef = useRef<HTMLButtonElement>(null);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.target as HTMLFormElement;
     const formData = new FormData(form);
     const question = formData.get("question")?.toString() || "";
     form.reset();
+
+    onSubmit(question);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLFormElement>) => {
