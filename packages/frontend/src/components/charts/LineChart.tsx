@@ -9,12 +9,11 @@ export const LineChart = ({ data }: LineChartProps) => (
     data={data}
     margin={{ top: 50, right: 160, bottom: 50, left: 60 }}
     xScale={{ type: "linear" }}
-    yScale={{ type: "linear", stacked: true, min: 0, max: 2500 }}
+    yScale={{ type: "linear" }}
     yFormat=" >-.2f"
     curve="monotoneX"
     axisTop={null}
     axisRight={{
-      tickValues: [0, 500, 1000, 1500, 2000, 2500],
       tickSize: 5,
       tickPadding: 5,
       tickRotation: 0,
@@ -23,7 +22,6 @@ export const LineChart = ({ data }: LineChartProps) => (
       legendOffset: 0,
     }}
     axisBottom={{
-      tickValues: [0, 20, 40, 60, 80, 100, 120],
       tickSize: 5,
       tickPadding: 5,
       tickRotation: 0,
@@ -33,7 +31,6 @@ export const LineChart = ({ data }: LineChartProps) => (
       legendPosition: "middle",
     }}
     axisLeft={{
-      tickValues: [0, 500, 1000, 1500, 2000, 2500],
       tickSize: 5,
       tickPadding: 5,
       tickRotation: 0,
@@ -53,8 +50,6 @@ export const LineChart = ({ data }: LineChartProps) => (
     pointLabelYOffset={-12}
     enableTouchCrosshair={true}
     useMesh={true}
-    gridXValues={[0, 20, 40, 60, 80, 100, 120]}
-    gridYValues={[0, 500, 1000, 1500, 2000, 2500]}
     legends={[
       {
         anchor: "bottom-right",

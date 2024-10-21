@@ -1,17 +1,17 @@
 import { LoaderCircle } from "lucide-react";
-
 import { Message } from "../components/Message";
 import { QuestionInput } from "../components/QuestionInput";
 import { useRequestData } from "../hooks/useRequestData";
-import { OutputEntry } from "../types";
+import { MessageEntry } from "../types";
 import { useState } from "react";
 import { MessageFactory } from "../components/MessageFactory";
+import { useParams } from "react-router-dom";
 
-export const IndexPage = () => {
-  const [messages, setMessages] = useState<
-    (OutputEntry & { isResponse?: boolean })[]
-  >([]);
-  const mutation = useRequestData((response) => {
+export const ConversationsId = () => {
+  const { id } = useParams();
+  const [messages, setMessages] = useState<Array<MessageEntry>>([]);
+
+  const mutation = useRequestData(id!, (response) => {
     setMessages((s) =>
       s.concat(response.map((r) => ({ ...r, isResponse: true })))
     );
@@ -23,7 +23,7 @@ export const IndexPage = () => {
         <div className="flex-1">
           <h1 className="text-2xl font-bold">All for one</h1>
 
-          <ol>
+          <ol className="flex flex-col gap-4">
             {messages.map((message, index) => (
               <li key={index} className="block w-full">
                 <MessageFactory message={message} />
