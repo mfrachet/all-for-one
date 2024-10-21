@@ -9,6 +9,12 @@ const LineChart = lazy(() =>
   }))
 );
 
+const PieChart = lazy(() =>
+  import("./charts/PieChart").then((m) => ({
+    default: m.PieChart,
+  }))
+);
+
 export const MessageFactory = ({ message }: { message: MessageEntry }) => {
   return (
     <Suspense>
@@ -19,6 +25,11 @@ export const MessageFactory = ({ message }: { message: MessageEntry }) => {
           </ChartWrapper>
         )}
         {message.type === "paragraph" && <p>{message.data}</p>}
+        {message.type === "pieChart" && (
+          <ChartWrapper>
+            <PieChart data={message.data} />
+          </ChartWrapper>
+        )}
       </Message>
     </Suspense>
   );

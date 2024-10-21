@@ -15,6 +15,16 @@ type ParagraphOutput = {
   data: string;
 };
 
-export type OutputEntry = LineChartOutput | ParagraphOutput;
+type PieChartOutput = {
+  type: "pieChart";
+  data: Array<{
+    id: string;
+    label: string;
+    value: number;
+    color: string;
+  }>;
+};
+
+type OutputEntry = LineChartOutput | ParagraphOutput | PieChartOutput;
 
 export type MessageEntry = OutputEntry & { isResponse?: boolean };

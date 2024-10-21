@@ -6,6 +6,7 @@ import { MessageEntry } from "../types";
 import { useState } from "react";
 import { MessageFactory } from "../components/MessageFactory";
 import { useParams } from "react-router-dom";
+import { Container } from "../components/Container";
 
 export const ConversationsId = () => {
   const { id } = useParams();
@@ -18,9 +19,9 @@ export const ConversationsId = () => {
   });
 
   return (
-    <main className="h-full max-w-3xl mx-auto">
-      <div className="h-full flex flex-col py-4">
-        <div className="flex-1">
+    <main className="h-full flex flex-col py-4">
+      <div className="flex-1 overflow-y-scroll">
+        <Container>
           <h1 className="text-2xl font-bold">All for one</h1>
 
           <ol className="flex flex-col gap-4">
@@ -36,15 +37,17 @@ export const ConversationsId = () => {
               <LoaderCircle className="w-6 h-6 animate-spin" />
             </Message>
           )}
-        </div>
+        </Container>
+      </div>
 
+      <Container>
         <QuestionInput
           onSubmit={(str: string) => {
             setMessages((s) => s.concat([{ type: "paragraph", data: str }]));
             mutation.mutate(str);
           }}
         />
-      </div>
+      </Container>
     </main>
   );
 };
