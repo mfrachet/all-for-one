@@ -1,0 +1,16 @@
+{
+  "name": "@all-for-one/ai",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx src/index.ts"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.1"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "openai": "^4.68.1"
+  }
+}
