@@ -5,7 +5,7 @@ import { ChartWrapper } from "./ChartWrapper";
 import { Spinner } from "./Spinner";
 
 const LineChart = lazy(() =>
-  import("./charts/LineChart").then((m) => ({
+  import("./charts/LineChart/LineChart").then((m) => ({
     default: m.LineChart,
   }))
 );
