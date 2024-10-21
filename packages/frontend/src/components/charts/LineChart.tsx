@@ -8,25 +8,15 @@ export const LineChart = ({ data }: LineChartProps) => (
   <ResponsiveLine
     data={data}
     margin={{ top: 50, right: 160, bottom: 50, left: 60 }}
-    xScale={{ type: "linear" }}
+    xScale={{ type: "point" }}
     yScale={{ type: "linear" }}
-    yFormat=" >-.2f"
     curve="monotoneX"
     axisTop={null}
-    axisRight={{
-      tickSize: 5,
-      tickPadding: 5,
-      tickRotation: 0,
-      format: ".2s",
-      legend: "",
-      legendOffset: 0,
-    }}
     axisBottom={{
       tickSize: 5,
       tickPadding: 5,
       tickRotation: 0,
-      format: ".2f",
-      legend: "price",
+      legend: "",
       legendOffset: 36,
       legendPosition: "middle",
     }}
@@ -35,9 +25,10 @@ export const LineChart = ({ data }: LineChartProps) => (
       tickPadding: 5,
       tickRotation: 0,
       format: ".2s",
-      legend: "volume",
+      legend: "",
       legendOffset: -40,
       legendPosition: "middle",
+      tickValues: "auto",
     }}
     enableGridX={false}
     colors={{ scheme: "spectral" }}
