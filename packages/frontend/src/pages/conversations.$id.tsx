@@ -3,12 +3,13 @@ import { Message } from "../components/Message";
 import { QuestionInput } from "../components/QuestionInput";
 import { useRequestData } from "../hooks/useRequestData";
 import { MessageEntry } from "../types";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { MessageFactory } from "../components/MessageFactory";
 import { useParams } from "react-router-dom";
 import { Container } from "../components/Container";
 
 export const ConversationsId = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
   const { id } = useParams();
   const [messages, setMessages] = useState<Array<MessageEntry>>([]);
 
@@ -18,9 +19,17 @@ export const ConversationsId = () => {
     );
   });
 
+  useEffect(() => {
+    if (!containerRef.current) return;
+    containerRef.current.scroll({
+      top: containerRef.current.scrollHeight,
+      behavior: "smooth",
+    });
+  }, [messages]);
+
   return (
     <main className="h-full flex flex-col py-4">
-      <div className="flex-1 overflow-y-scroll">
+      <div className="flex-1 overflow-y-scroll" ref={containerRef}>
         <Container>
           <h1 className="text-2xl font-bold">All for one</h1>
 
