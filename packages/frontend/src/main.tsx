@@ -1,6 +1,7 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import "@fontsource-variable/inter";
 import "./index.css";
 import { IndexPage } from "./pages";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";

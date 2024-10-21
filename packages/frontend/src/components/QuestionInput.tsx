@@ -42,7 +42,7 @@ export const QuestionInput = ({
       <button
         type="submit"
         ref={btnRef}
-        className="w-12 h-12 bg-black rounded-2xl flex items-center justify-center absolute right-4 top-2"
+        className="w-12 h-12 bg-black rounded-2xl flex items-center justify-center absolute right-2 top-2"
       >
         <Send className="w-6 h-6 text-white" />
       </button>
