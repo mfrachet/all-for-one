@@ -1,28 +1,35 @@
 import { LoaderCircle } from "lucide-react";
-import { LineChart } from "../components/charts/LineChart";
-import { ChartWrapper } from "../components/ChartWrapper";
+
 import { Message } from "../components/Message";
 import { QuestionInput } from "../components/QuestionInput";
-import { lineChartFixture } from "../fixtures/lineChart.fixture";
 import { useRequestData } from "../hooks/useRequestData";
+import { OutputEntry } from "../types";
+import { useState } from "react";
+import { MessageFactory } from "../components/MessageFactory";
 
 export const IndexPage = () => {
-  const mutation = useRequestData();
+  const [messages, setMessages] = useState<
+    (OutputEntry & { isResponse?: boolean })[]
+  >([]);
+  const mutation = useRequestData((response) => {
+    setMessages((s) =>
+      s.concat(response.map((r) => ({ ...r, isResponse: true })))
+    );
+  });
 
   return (
     <main className="h-full max-w-3xl mx-auto">
       <div className="h-full flex flex-col py-4">
         <div className="flex-1">
-          <h1 className="text-2xl font-bold">Hello world</h1>
+          <h1 className="text-2xl font-bold">All for one</h1>
 
-          <Message>Hello world</Message>
-          <Message isResponse>
-            Here is the data you were looking for
-            <ChartWrapper>
-              <LineChart data={lineChartFixture} />
-            </ChartWrapper>
-          </Message>
-          <Message>Hello world</Message>
+          <ol>
+            {messages.map((message, index) => (
+              <li key={index} className="block w-full">
+                <MessageFactory message={message} />
+              </li>
+            ))}
+          </ol>
 
           {mutation.isPending && (
             <Message isResponse>
@@ -31,7 +38,12 @@ export const IndexPage = () => {
           )}
         </div>
 
-        <QuestionInput onSubmit={(str: string) => mutation.mutate(str)} />
+        <QuestionInput
+          onSubmit={(str: string) => {
+            setMessages((s) => s.concat([{ type: "paragraph", data: str }]));
+            mutation.mutate(str);
+          }}
+        />
       </div>
     </main>
   );

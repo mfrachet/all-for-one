@@ -8,6 +8,8 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
+const inMemoryContext = [];
+
 app.post("/compute", async (req, res) => {
   const input = req.body.input;
   const response = await getOpenAIResponse(computePrompt(input));

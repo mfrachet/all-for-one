@@ -11,7 +11,7 @@ export const Message = ({ children, isResponse = false }: MessageProps) => {
   }
 
   return (
-    <div className="flex flex-col items-end prose">
+    <div className="flex flex-col items-end w-full">
       <div className="bg-gray-100 rounded-3xl py-2 px-4">{children}</div>
     </div>
   );
