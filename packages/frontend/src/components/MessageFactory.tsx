@@ -2,7 +2,7 @@ import { MessageEntry } from "../types";
 import { lazy, Suspense } from "react";
 import { Message } from "./Message";
 import { ChartWrapper } from "./ChartWrapper";
-import { LoaderCircle } from "lucide-react";
+import { Spinner } from "./Spinner";
 
 const LineChart = lazy(() =>
   import("./charts/LineChart").then((m) => ({
@@ -23,7 +23,7 @@ export const MessageFactory = ({ message }: { message: MessageEntry }) => {
         <Suspense
           fallback={
             <ChartWrapper>
-              <LoaderCircle className="w-6 h-6 animate-spin" />
+              <Spinner />
             </ChartWrapper>
           }
         >
@@ -37,7 +37,7 @@ export const MessageFactory = ({ message }: { message: MessageEntry }) => {
         <Suspense
           fallback={
             <ChartWrapper>
-              <LoaderCircle className="w-6 h-6 animate-spin" />
+              <Spinner />
             </ChartWrapper>
           }
         >
