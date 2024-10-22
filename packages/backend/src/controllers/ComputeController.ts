@@ -1,10 +1,14 @@
-import { Request, Response } from "express";
-import { getOpenAIResponse } from "@all-for-one/ai";
+import {
+  ExpectedSqlColumns,
+  getOpenAIResponse,
+  LineChartColumns,
+  PieChartColumns,
+} from "@all-for-one/ai";
 import { generateClickhouseQuery } from "@all-for-one/ai";
 import { CachingService } from "../services/CachingService";
 import { AiContext, ExpectedOutput } from "../types";
 import { mapAiResponse } from "../helpers/mapAiResponse";
-
+import { clickhouseClient } from "../services/clickhouse";
 export class ComputeController {
   constructor(private cacheService: CachingService<AiContext>) {}
 
@@ -33,8 +37,20 @@ export class ComputeController {
     await this.cacheService.set(conversationId, cachedCtx);
 
     if (response) {
-      const formattedResponse = mapAiResponse(JSON.parse(response));
-      return formattedResponse;
+      console.log({ response });
+      const responseObj = JSON.parse(response);
+      if (responseObj.sqlQuery && responseObj.chartType) {
+        console.log(responseObj.sqlQuery);
+        const resultSet = await clickhouseClient.query({
+          query: responseObj.sqlQuery,
+          format: "JSONEachRow",
+        });
+
+        const rows: Array<ExpectedSqlColumns<typeof responseObj.chartType>> =
+          await resultSet.json();
+        const formattedResponse = mapAiResponse(responseObj.chartType, rows);
+        return formattedResponse;
+      }
     }
 
     return null;

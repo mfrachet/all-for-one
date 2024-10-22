@@ -1,29 +1,67 @@
-export type SqlChartType = "lineChart" | "pieChart";
-export type ExpectedSqlOutput = {
-  chartType: SqlChartType;
+export type SqlChartType = "lineChart" | "pieChart" | "paragraph";
+
+export type ExpectedSqlOutput<T extends SqlChartType> = {
+  chartType: T;
   sqlQuery: string;
+  columns: ExpectedSqlColumns<T>; // Add the columns field based on the chart type
 };
 
-export type ExpectedSqlColumns = {
-  type: "lineChart";
+export type LineChartColumns = {
   x: number | string | Date;
   y: number;
 };
+
+export type PieChartColumns = {
+  category: string;
+  value: number;
+};
+
+export type ParagraphColumns = {
+  text: string;
+};
+
+export type ExpectedSqlColumns<T extends SqlChartType> = T extends "lineChart"
+  ? LineChartColumns
+  : T extends "pieChart"
+  ? PieChartColumns
+  : T extends "paragraph"
+  ? ParagraphColumns
+  : never;
 
 export const expectedOutput = `
-type SqlChartType = "lineChart" | "pieChart";
-type ExpectedSqlOutput = {
-  chartType: SqlChartType;
+export type SqlChartType = "lineChart" | "pieChart" | "paragraph";
+
+export type ExpectedSqlOutput<T extends SqlChartType> = {
+  chartType: T;
   sqlQuery: string;
+  columns: ExpectedSqlColumns<T>; // Add the columns field based on the chart type
 };
 
-type ExpectedSqlColumns = {
-  type: "lineChart";
+export type LineChartColumns = {
   x: number | string | Date;
   y: number;
 };
+
+export type PieChartColumns = {
+  category: string;
+  value: number;
+};
+
+export type ParagraphColumns = {
+  text: string;
+};
+
+export type ExpectedSqlColumns<T extends SqlChartType> = T extends "lineChart"
+  ? LineChartColumns
+  : T extends "pieChart"
+  ? PieChartColumns
+  : T extends "paragraph"
+  ? ParagraphColumns
+  : never;
+
 `;
 
-export const exclusionOutput = `
-{ "type" :"paragraph", "data": "Not allowed to answer this question."}
-`;
+// Removed this for now. It was returning this for total question.
+// export const exclusionOutput = `
+// { "type" :"paragraph", "data": "Not allowed to answer this question."}
+// `;
