@@ -35,7 +35,7 @@ export const LineChart = ({ data }: LineChartProps) => (
     <ResponsiveLine
       data={data}
       curve="natural"
-      lineWidth={1}
+      lineWidth={2}
       margin={{ top: margin, right: margin, bottom: margin, left: margin }}
       xScale={{ type: "point" }}
       yScale={{
