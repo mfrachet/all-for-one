@@ -5,7 +5,7 @@ import bodyParser from "body-parser";
 import { ComputeController } from "./controllers/ComputeController";
 import { CachingService } from "./services/CachingService";
 import { AiContext } from "./types";
-import { Request, Response } from "express";
+import { ComputeService } from "./services/ComputeService";
 
 const app = express();
 
@@ -13,7 +13,8 @@ app.use(cors());
 app.use(bodyParser.json());
 
 const cacheService = new CachingService<AiContext>();
-const computeController = new ComputeController(cacheService);
+const computeService = new ComputeService();
+const computeController = new ComputeController(computeService, cacheService);
 
 app.post("/compute/:id", async (req, res) => {
   const conversationId = req.params.id;

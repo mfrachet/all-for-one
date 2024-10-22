@@ -1,11 +1,14 @@
-import { ExpectedSqlColumns, getOpenAIResponse } from "@all-for-one/ai";
+import { getOpenAIResponse } from "@all-for-one/ai";
 import { generateClickhouseQuery } from "@all-for-one/ai";
 import { CachingService } from "../services/CachingService";
 import { AiContext, ExpectedOutput } from "../types";
-import { mapAiResponse } from "../helpers/mapAiResponse";
-import { clickhouseClient } from "../services/clickhouse";
+
+import { ComputeService } from "../services/ComputeService";
 export class ComputeController {
-  constructor(private cacheService: CachingService<AiContext>) {}
+  constructor(
+    private computeService: ComputeService,
+    private cacheService: CachingService<AiContext>
+  ) {}
 
   async _getCachedContext(conversationId: string) {
     const cachedCtx = await this.cacheService.get(conversationId);
@@ -22,42 +25,30 @@ export class ComputeController {
     input: string
   ): Promise<ExpectedOutput | null> {
     const prompt = generateClickhouseQuery(input);
-
-    console.log("[AI] user input", input);
-
     const cachedCtx = await this._getCachedContext(conversationId);
-    cachedCtx.push({ role: "user", content: prompt });
 
+    cachedCtx.push({ role: "user", content: prompt });
     const response = await getOpenAIResponse(prompt, cachedCtx);
     cachedCtx.push({ role: "assistant", content: response || "" });
-
     await this.cacheService.set(conversationId, cachedCtx);
 
-    if (response) {
+    if (!response) return null;
+
+    try {
       const responseObj = JSON.parse(response);
-      if (responseObj.sqlQuery && responseObj.type && responseObj.title) {
-        const resultSet = await clickhouseClient.query({
-          query: responseObj.sqlQuery,
-          format: "JSONEachRow",
-        });
 
-        console.log("[Clickhouse] sql query generated", responseObj.sqlQuery);
+      if (!responseObj.sqlQuery || !responseObj.type || !responseObj.title)
+        return null;
 
-        const rows: ExpectedSqlColumns = {
-          type: responseObj.type,
-          data: (await resultSet.json()) as any,
-        };
+      const formattedResponse = await this.computeService.execute(
+        responseObj.type,
+        responseObj.title,
+        responseObj.sqlQuery
+      );
 
-        const formattedResponse = mapAiResponse(
-          responseObj.type,
-          responseObj.title,
-          rows
-        );
-
-        return formattedResponse;
-      }
+      return formattedResponse;
+    } catch {
+      return null;
     }
-
-    return null;
   }
 }
