@@ -15,10 +15,10 @@ const CustomLegend = ({ data }: LineChartProps) => {
       {data.map((d) => (
         <li
           key={d.id}
-          className="flex flex-row items-center gap-2 p-0 m-0 text-sm text-gray-700"
+          className="flex flex-row items-center gap-2 p-0 m-0 text-sm text-gray-700 capitalize"
         >
           <div
-            className="w-4 h-4 rounded-full border-2 border-white"
+            className="w-4 h-4 rounded border-2 border-white"
             style={{ background: d.color }}
           />
           {d.id}
@@ -36,7 +36,7 @@ export const LineChart = ({ data }: LineChartProps) => (
       data={data}
       curve="natural"
       lineWidth={2}
-      margin={{ top: margin, right: margin, bottom: margin, left: margin }}
+      margin={{ top: margin, right: margin, bottom: margin + 16, left: margin }}
       xScale={{ type: "point" }}
       yScale={{
         type: "linear",
@@ -54,25 +54,23 @@ export const LineChart = ({ data }: LineChartProps) => (
       }}
       axisLeft={null}
       enableGridX={false}
-      pointSize={0}
       crosshairType="x"
       enableSlices="x"
       enablePointLabel={false}
       enableArea={false}
       areaBlendMode="normal"
       areaBaselineValue={0}
-      isInteractive
       areaOpacity={0}
-      pointLabel=""
+      isInteractive
       colors={(p) => p.color}
       sliceTooltip={Tooltip}
       tooltip={() => null}
       enableGridY={true}
       enableCrosshair={true}
+      pointSize={0}
       pointColor={{ from: "color", modifiers: [] }}
       pointBorderColor={"transparent"}
       pointBorderWidth={0}
-      enablePoints={false}
       useMesh={true}
       debugMesh={false}
       debugSlices={false}
@@ -83,6 +81,7 @@ export const LineChart = ({ data }: LineChartProps) => (
           "axes",
           "areas",
           "lines",
+          "points",
           "crosshair",
           "slices",
           "mesh",
@@ -92,7 +91,7 @@ export const LineChart = ({ data }: LineChartProps) => (
       }
     />
 
-    <div className="shrink-0 bg-gray-50 p-4 flex items-center">
+    <div className="shrink-0 bg-gray-50 p-4 flex items-center w-[160px]">
       <CustomLegend data={data} />
     </div>
   </div>

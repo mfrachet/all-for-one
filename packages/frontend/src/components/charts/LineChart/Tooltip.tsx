@@ -5,25 +5,22 @@ type LineChartPoint = { data: Point["data"] & { Icon?: ReactNode } } & Point;
 
 export const Tooltip = ({ slice }: SliceTooltipProps) => {
   return (
-    <div className="bg-white rounded-xl shadow-md p-4 border border-gray-200 min-w-[200px]">
-      <p className="font-bold text-sm">{String(slice.points[0].data.x)}</p>
-      <ul className="pt-3 flex flex-col gap-2">
+    <div className="bg-white rounded-xl shadow-md border border-gray-200 min-w-[200px] px-2 py-1">
+      <p className="font-bold text-sm p-0 m-0 text-xs capitalize">
+        {String(slice.points[0].data.x)}
+      </p>
+
+      <ul className="flex flex-col list-none p-0 m-0 text-xs">
         {slice.points.map((point: LineChartPoint) => (
           <li
             key={point.id}
-            className="text-sm text-gray-700 flex flex-row items-center justify-between"
+            className="flex flex-row items-center gap-2 p-0 m-0 text-sm text-gray-700 capitalize"
           >
-            <div className="flex flex-row gap-3 items-center">
-              {point.data.Icon ? (
-                point.data.Icon
-              ) : (
-                <div
-                  className="rounded-full w-[20px] h-[20px]"
-                  style={{ background: point.serieColor }}
-                />
-              )}
-              <div>{point.serieId}</div>
-            </div>
+            <div
+              className="w-4 h-4 rounded border-2 border-white"
+              style={{ background: point.serieColor }}
+            />
+            {point.serieId}:
             <div>
               <strong>{point.data.yFormatted}</strong>
             </div>
