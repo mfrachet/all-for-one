@@ -1,0 +1,21 @@
+version: "3.8"
+
+services:
+  clickhouse:
+    image: clickhouse/clickhouse-server:latest
+    container_name: clickhouse
+    ports:
+      - "8123:8123" # HTTP interface
+      - "9000:9000" # Native TCP interface
+      - "9009:9009" # Interserver HTTP
+    environment:
+      - CLICKHOUSE_DB=all
+      - CLICKHOUSE_USER=all
+      - CLICKHOUSE_PASSWORD=all12345
+    volumes:
+      - clickhouse_data:/var/lib/clickhouse
+      - clickhouse_config:/etc/clickhouse-server
+
+volumes:
+  clickhouse_data:
+  clickhouse_config:
