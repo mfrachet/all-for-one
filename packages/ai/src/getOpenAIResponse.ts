@@ -1,5 +1,6 @@
 import { openai } from "./openAi";
-import { computePrompt } from "./promps/compute/compute.prompt";
+import { generateClickhouseQuery } from "./promps/generateClickhouseQuery/generateClickhouseQuery.prompt";
+
 import { AiContext } from "./types";
 
 export const getOpenAIResponse = async (
@@ -11,7 +12,7 @@ export const getOpenAIResponse = async (
     messages: context.concat([
       {
         role: "user",
-        content: computePrompt(prompt),
+        content: generateClickhouseQuery(prompt),
       },
     ]),
   });

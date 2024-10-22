@@ -1,2 +1,2 @@
-export * from "./promps/compute/compute.prompt";
+export * from "./promps/generateClickhouseQuery/generateClickhouseQuery.prompt";
 export * from "./getOpenAIResponse";

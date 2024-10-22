@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { getOpenAIResponse } from "@all-for-one/ai";
-import { computePrompt } from "@all-for-one/ai";
+import { generateClickhouseQuery } from "@all-for-one/ai";
 import { CachingService } from "../services/cachingService";
 import { AiContext } from "../types";
 
@@ -20,7 +20,7 @@ export class ComputeController {
   async compute(req: Request, res: Response) {
     const conversationId = req.params.id;
     const input = req.body.input as string;
-    const prompt = computePrompt(input);
+    const prompt = generateClickhouseQuery(input);
 
     const cachedCtx = await this._getCachedContext(conversationId);
     cachedCtx.push({ role: "user", content: prompt });
