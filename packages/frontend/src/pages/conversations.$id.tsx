@@ -16,6 +16,7 @@ export const ConversationsId = () => {
   const containerRef = useScrollDown([messages]);
 
   const mutation = useRequestData(id!, (response) => {
+    console.log({ response });
     setMessages((s) =>
       s.concat(response.map((r) => ({ ...r, isResponse: true })))
     );

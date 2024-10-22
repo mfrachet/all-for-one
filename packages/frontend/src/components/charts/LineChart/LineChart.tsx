@@ -1,11 +1,6 @@
 import { ResponsiveLine } from "@nivo/line";
 import type { Layer, LineSvgProps } from "@nivo/line";
-import {
-  AxisTickSize,
-  AxisTickPadding,
-  LegendOffset,
-  LightTextColor,
-} from "./constants";
+import { AxisTickSize, AxisTickPadding } from "./constants";
 import { Tooltip } from "./Tooltip";
 import { ActivePoint } from "./ActivePoint";
 import { customizedTheme } from "./styles";
@@ -16,11 +11,14 @@ export interface LineChartProps {
 
 const CustomLegend = ({ data }: LineChartProps) => {
   return (
-    <ul className="list-none overflow-x-scroll">
+    <ul className="list-none overflow-x-scroll p-0 m-0 flex flex-col gap-2">
       {data.map((d) => (
-        <li key={d.id} className="flex flex-row items-center gap-2">
+        <li
+          key={d.id}
+          className="flex flex-row items-center gap-2 p-0 m-0 text-sm text-gray-700"
+        >
           <div
-            className="w-2 h-2 rounded-full"
+            className="w-4 h-4 rounded-full border-2 border-white"
             style={{ background: d.color }}
           />
           {d.id}
@@ -30,13 +28,15 @@ const CustomLegend = ({ data }: LineChartProps) => {
   );
 };
 
+const margin = 60;
+
 export const LineChart = ({ data }: LineChartProps) => (
   <div className="relative h-full w-full flex flex-row gap-0">
     <ResponsiveLine
       data={data}
       curve="natural"
       lineWidth={1}
-      margin={{ top: 4, right: 8, bottom: 40, left: 8 }}
+      margin={{ top: margin, right: margin, bottom: margin, left: margin }}
       xScale={{ type: "point" }}
       yScale={{
         type: "linear",
@@ -92,7 +92,7 @@ export const LineChart = ({ data }: LineChartProps) => (
       }
     />
 
-    <div className="shrink-0">
+    <div className="shrink-0 bg-gray-50 p-4 flex items-center">
       <CustomLegend data={data} />
     </div>
   </div>

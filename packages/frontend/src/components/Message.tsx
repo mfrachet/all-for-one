@@ -7,7 +7,7 @@ export interface MessageProps {
 
 export const Message = ({ children, isResponse = false }: MessageProps) => {
   if (isResponse) {
-    return <div className="py-4 prose">{children}</div>;
+    return <div className="py-4 prose prose-xl">{children}</div>;
   }
 
   return (

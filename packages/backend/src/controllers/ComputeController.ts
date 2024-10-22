@@ -37,7 +37,7 @@ export class ComputeController {
     try {
       res.send(JSON.parse(response));
     } catch (error) {
-      console.error({ error });
+      console.error({ error, response });
       res.status(500).send({ error: "Internal server error", details: error });
     }
   }
