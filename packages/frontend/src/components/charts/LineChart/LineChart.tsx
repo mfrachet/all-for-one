@@ -51,6 +51,10 @@ export const LineChart = ({ data }: LineChartProps) => (
         tickSize: AxisTickSize,
         tickPadding: AxisTickPadding,
         tickValues: 10,
+        format: (value) => {
+          const str = `${value}`;
+          return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+        },
       }}
       axisLeft={null}
       enableGridX={false}
