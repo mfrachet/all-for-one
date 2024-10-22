@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 import { getOpenAIResponse } from "@all-for-one/ai";
 import { generateClickhouseQuery } from "@all-for-one/ai";
-import { CachingService } from "../services/cachingService";
-import { AiContext } from "../types";
+import { CachingService } from "../services/CachingService";
+import { AiContext, ExpectedOutput } from "../types";
 import { mapAiResponse } from "../helpers/mapAiResponse";
 
 export class ComputeController {
@@ -18,9 +18,10 @@ export class ComputeController {
     return cachedCtx;
   }
 
-  async compute(req: Request, res: Response) {
-    const conversationId = req.params.id;
-    const input = req.body.input as string;
+  async compute(
+    conversationId: string,
+    input: string
+  ): Promise<ExpectedOutput | null> {
     const prompt = generateClickhouseQuery(input);
 
     const cachedCtx = await this._getCachedContext(conversationId);
@@ -31,16 +32,11 @@ export class ComputeController {
 
     await this.cacheService.set(conversationId, cachedCtx);
 
-    if (!response) {
-      return res.status(404).send({ error: "Not found" });
+    if (response) {
+      const formattedResponse = mapAiResponse(JSON.parse(response));
+      return formattedResponse;
     }
 
-    try {
-      const formattedResponse = mapAiResponse(JSON.parse(response));
-      res.send(formattedResponse);
-    } catch (error) {
-      console.error({ error, response });
-      res.status(500).send({ error: "Internal server error", details: error });
-    }
+    return null;
   }
 }

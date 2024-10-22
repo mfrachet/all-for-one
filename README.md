@@ -8,3 +8,22 @@ $ pnpm dev
 ```
 
 - frontend is http://localhost:5173/
+
+Setting up meltano. (TBC)
+
+```sh
+$ docker compose up
+
+// install pyenv
+$ brew install pyenv
+
+// install meltano
+$ docker pull meltano/meltano
+$ docker run meltano/meltano --version
+
+// install meltano dependencies
+cd meltano_project
+docker run --rm -v $(pwd):/project -w /project meltano/meltano install
+docker run -rm -v $(pwd):/project -w /project meltano/meltano run tap-stripe target-clickhouse
+
+```
