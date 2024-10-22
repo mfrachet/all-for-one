@@ -9,9 +9,6 @@ import { Container } from "../components/Container";
 import { Navbar } from "../components/Navbar";
 import { Spinner } from "../components/Spinner";
 import { useScrollDown } from "../hooks/useScrollDown";
-import { LineChart } from "../components/charts/LineChart/LineChart";
-import { lineChartFixture } from "../fixtures/lineChart.fixture";
-import { ChartWrapper } from "../components/ChartWrapper";
 
 export const ConversationsId = () => {
   const { id } = useParams();
@@ -47,12 +44,6 @@ export const ConversationsId = () => {
                 <Spinner />
               </Message>
             )}
-
-            <Message isResponse>
-              <ChartWrapper>
-                <LineChart data={lineChartFixture} />
-              </ChartWrapper>
-            </Message>
           </Container>
         </div>
 

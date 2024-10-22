@@ -1,7 +1,7 @@
 export type SqlChartType = "lineChart" | "pieChart" | "paragraph";
 
 export type ExpectedSqlOutput<T extends SqlChartType> = {
-  chartType: T;
+  type: T;
   sqlQuery: string;
   columns: ExpectedSqlColumns<T>; // Add the columns field based on the chart type
 };
@@ -32,7 +32,7 @@ export const expectedOutput = `
 export type SqlChartType = "lineChart" | "pieChart" | "paragraph";
 
 export type ExpectedSqlOutput<T extends SqlChartType> = {
-  chartType: T;
+  type: T;
   sqlQuery: string;
   columns: ExpectedSqlColumns<T>; // Add the columns field based on the chart type
 };

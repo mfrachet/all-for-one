@@ -39,16 +39,16 @@ export class ComputeController {
     if (response) {
       console.log({ response });
       const responseObj = JSON.parse(response);
-      if (responseObj.sqlQuery && responseObj.chartType) {
+      if (responseObj.sqlQuery && responseObj.type) {
         console.log(responseObj.sqlQuery);
         const resultSet = await clickhouseClient.query({
           query: responseObj.sqlQuery,
           format: "JSONEachRow",
         });
 
-        const rows: Array<ExpectedSqlColumns<typeof responseObj.chartType>> =
+        const rows: Array<ExpectedSqlColumns<typeof responseObj.type>> =
           await resultSet.json();
-        const formattedResponse = mapAiResponse(responseObj.chartType, rows);
+        const formattedResponse = mapAiResponse(responseObj.type, rows);
         return formattedResponse;
       }
     }

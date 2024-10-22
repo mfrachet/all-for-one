@@ -11,6 +11,7 @@ import {
   ParagraphOutput,
   PieChartOutput,
 } from "../types";
+import { getRandomPastelColor } from "./getRandomPastelColor";
 
 const isLineChartColumns = (
   type: SqlChartType,
@@ -66,7 +67,7 @@ export const mapAiResponse = (
       type: "lineChart",
       data: [
         {
-          color: "red",
+          color: getRandomPastelColor(),
           id: "1",
           data: response.map((item) => ({
             x: item.x,
@@ -85,7 +86,7 @@ export const mapAiResponse = (
         id: "1",
         label: item.category,
         value: item.value,
-        color: "red",
+        color: getRandomPastelColor(),
       })),
     };
     return [pieChartOutput];
