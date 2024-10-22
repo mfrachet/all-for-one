@@ -4,8 +4,8 @@ import { getOpenAIResponse } from "./getOpenAIResponse";
 
 (async () => {
   const response = await getOpenAIResponse(
-    computePrompt(`Random data for a line chart`)
+    computePrompt(`the evolution of transactions count for the last 2 months`)
   );
 
-  console.log("lol", response);
+  console.log("Result", response);
 })();
