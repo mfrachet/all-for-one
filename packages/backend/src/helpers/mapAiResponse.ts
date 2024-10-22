@@ -1,8 +1,8 @@
 import {
   ExpectedSqlColumns,
-  LineChartColumns,
-  ParagraphColumns,
-  PieChartColumns,
+  LineChart,
+  Paragraph,
+  PieChart,
   SqlChartType,
 } from "@all-for-one/ai";
 import {
@@ -14,84 +14,85 @@ import {
 import { getRandomPastelColor } from "./getRandomPastelColor";
 
 const isLineChartColumns = (
-  type: SqlChartType,
-  response: Array<ExpectedSqlColumns<typeof type>>
-): response is Array<LineChartColumns> => {
-  if (type !== "lineChart") {
-    return false;
-  }
-
-  return response.every((item) => "x" in item && "y" in item);
+  response: ExpectedSqlColumns
+): response is LineChart => {
+  return response.type === "lineChart";
 };
 
-const isPieChartColumns = (
-  type: SqlChartType,
-  response: Array<ExpectedSqlColumns<typeof type>>
-): response is Array<PieChartColumns> => {
-  if (type !== "pieChart") {
-    return false;
-  }
+// const isPieChartColumns = (
+//   type: SqlChartType,
+//   response: ExpectedSqlColumns
+// ): response is PieChart => {
+//   if (response.type === "pieChart") {
+//     return response.every((item) => "category" in item && "value" in item);
+//   }
 
-  return response.every((item) => "category" in item && "value" in item);
-};
+//   return response.every((item) => "category" in item && "value" in item);
+// };
 
 const isParagraphColumns = (
-  type: SqlChartType,
-  response: Array<ExpectedSqlColumns<typeof type>>
-): response is Array<ParagraphColumns> => {
-  if (type !== "paragraph") {
-    return false;
-  }
-
-  return response.every((item) => "text" in item);
+  response: ExpectedSqlColumns
+): response is Paragraph => {
+  return response.type === "paragraph";
 };
 
 export const mapAiResponse = (
   type: SqlChartType,
   title: string,
-  response: Array<ExpectedSqlColumns<typeof type>>
+  response: ExpectedSqlColumns
 ): ExpectedOutput => {
   if (!type) {
     return [];
   }
 
-  if (isParagraphColumns(type, response)) {
+  if (isParagraphColumns(response)) {
     const paragraphOutput: ParagraphOutput = {
       type: "paragraph",
-      data: response[0]?.text ?? "No data found",
+      data: response?.data[0]?.text ?? "No data found",
     };
     return [paragraphOutput];
   }
 
-  if (isLineChartColumns(type, response)) {
+  if (isLineChartColumns(response)) {
+    const groupedByKey = response.data.reduce((acc, item) => {
+      acc[item.groupingKey ?? title] = [
+        ...(acc[item.groupingKey ?? title] || []),
+        {
+          x: item.x,
+          y: item.y,
+        },
+      ];
+      return acc;
+    }, {} as Record<string, Array<{ x: number | string | Date; y: number }>>);
+
+    console.log({ groupedByKey, title });
+
     const lineChartOutput: LineChartOutput = {
       type: "lineChart",
-      data: [
-        {
-          color: getRandomPastelColor(title),
-          id: title,
-          data: response.map((item) => ({
-            x: item.x,
-            y: item.y,
-          })),
-        },
-      ],
+      data: Object.entries(groupedByKey).map(([groupingKey, data]) => ({
+        color: getRandomPastelColor(groupingKey),
+        id: groupingKey,
+        data,
+      })),
     };
+
+    console.log(lineChartOutput);
+
     return [lineChartOutput];
   }
 
-  if (isPieChartColumns(type, response)) {
-    const pieChartOutput: PieChartOutput = {
-      type: "pieChart",
-      data: response.map((item) => ({
-        id: title,
-        label: item.category,
-        value: item.value,
-        color: getRandomPastelColor(title),
-      })),
-    };
-    return [pieChartOutput];
-  }
+  // if (isPieChartColumns(type, response)) {
+  //   const pieChartOutput: PieChartOutput = {
+  //     type: "pieChart",
+  //     data: response.map((item) => ({
+  //       id: title,
+  //       label: item.category,
+  //       value: item.value,
+  //       color: getRandomPastelColor(title),
+  //     })),
+  //   };
+  //   return [pieChartOutput];
+  // }
 
   return [];
 };

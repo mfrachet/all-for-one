@@ -17,7 +17,7 @@ const margin = 60;
 export const LineChart = ({ data }: LineChartProps) => (
   <ResponsiveLine
     data={data}
-    curve="natural"
+    curve="monotoneX"
     lineWidth={2}
     margin={{ top: margin, right: margin, bottom: margin + 16, left: margin }}
     xScale={{ type: "point" }}

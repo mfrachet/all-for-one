@@ -1,9 +1,4 @@
-import {
-  ExpectedSqlColumns,
-  getOpenAIResponse,
-  LineChartColumns,
-  PieChartColumns,
-} from "@all-for-one/ai";
+import { ExpectedSqlColumns, getOpenAIResponse } from "@all-for-one/ai";
 import { generateClickhouseQuery } from "@all-for-one/ai";
 import { CachingService } from "../services/CachingService";
 import { AiContext, ExpectedOutput } from "../types";
@@ -46,8 +41,10 @@ export class ComputeController {
           format: "JSONEachRow",
         });
 
-        const rows: Array<ExpectedSqlColumns<typeof responseObj.type>> =
-          await resultSet.json();
+        const rows: ExpectedSqlColumns = {
+          type: responseObj.type,
+          data: (await resultSet.json()) as any,
+        };
 
         const formattedResponse = mapAiResponse(
           responseObj.type,

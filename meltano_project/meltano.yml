@@ -14,21 +14,21 @@ plugins:
         account_id: acct_1LXmvrBXyIDV375S
         start_date: "2024-01-01T00:00:00.000Z"
       select_filter:
-        - "charges"
-        - "events"
+        # - "charges"
+        # - "events"
         - "customers"
         - "plans"
         - "products"
-        - "invoices"
-        - "invoice_items"
-        - "invoice_line_items"
-        - "transfers"
+        # - "invoices"
+        # - "invoice_items"
+        # - "invoice_line_items"
+        # - "transfers"
         - "coupons"
         - "subscriptions"
         - "subscription_items"
-        - "balance_transactions"
-        - "payouts"
-        - "payout_transactions"
+        # - "balance_transactions"
+        # - "payouts"
+        # - "payout_transactions"
   loaders:
     - name: target-jsonl
       variant: andyh1203
