@@ -29,7 +29,7 @@ export const MessageFactory = ({ message }: { message: MessageEntry }) => {
       {message.type === "paragraph" && <p>{message.data}</p>}
       {message.type === "pieChart" && (
         <Suspense fallback={<Spinner />}>
-          <ChartWrapper>
+          <ChartWrapper size="sm">
             <PieChart data={message.data} />
           </ChartWrapper>
         </Suspense>

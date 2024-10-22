@@ -1,9 +1,19 @@
 import { ReactNode } from "react";
 
-export const ChartWrapper = ({ children }: { children: ReactNode }) => {
-  return (
-    <div className="w-full h-96 shadow-md rounded-xl border border-gray-100 overflow-hidden">
-      {children}
-    </div>
-  );
+const classDict = {
+  sm: "h-80 w-1/2",
+  full: "h-96",
+};
+
+export const ChartWrapper = ({
+  children,
+  size = "full",
+}: {
+  children: ReactNode;
+  size?: "sm" | "full";
+}) => {
+  const cl = classDict[size];
+  const classnames = `overflow-hidden flex ${cl} shadow-md rounded-3xl border border-gray-100`;
+
+  return <div className={classnames}>{children}</div>;
 };
