@@ -14,7 +14,7 @@ export const Tooltip = ({ slice }: SliceTooltipProps) => {
         {slice.points.map((point: LineChartPoint) => (
           <li
             key={point.id}
-            className="flex flex-row items-center gap-2 p-0 m-0 text-sm text-gray-700 capitalize"
+            className="flex flex-row items-center gap-2 p-0 m-0 text-xs text-gray-700 capitalize"
           >
             <div
               className="w-4 h-4 rounded border-2 border-white"
