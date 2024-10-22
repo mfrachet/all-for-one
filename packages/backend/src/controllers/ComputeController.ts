@@ -3,6 +3,7 @@ import { getOpenAIResponse } from "@all-for-one/ai";
 import { generateClickhouseQuery } from "@all-for-one/ai";
 import { CachingService } from "../services/cachingService";
 import { AiContext } from "../types";
+import { mapAiResponse } from "../helpers/mapAiResponse";
 
 export class ComputeController {
   constructor(private cacheService: CachingService<AiContext>) {}
@@ -35,7 +36,8 @@ export class ComputeController {
     }
 
     try {
-      res.send(JSON.parse(response));
+      const formattedResponse = mapAiResponse(JSON.parse(response));
+      res.send(formattedResponse);
     } catch (error) {
       console.error({ error, response });
       res.status(500).send({ error: "Internal server error", details: error });

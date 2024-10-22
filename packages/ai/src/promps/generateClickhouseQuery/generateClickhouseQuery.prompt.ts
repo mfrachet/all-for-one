@@ -8,6 +8,7 @@ export const generateClickhouseQuery = (input: string) => `
     The JSON should be strict and valid, not containing any escaping characters, markdown or code blocks.
     The sql query should provide columns matching the "ExpectedSqlColumns" type provided above.
     The sql query should be a valid ClickHouse SQL query only and strictly following the DDL passed in context.
+    The sql query should always be ordered by the "type" column first.
 
     Here's the question: "${input}".
 `;
