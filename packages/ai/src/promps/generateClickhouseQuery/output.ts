@@ -17,8 +17,11 @@ export type LineChart = {
 
 export type PieChart = {
   type: "pieChart";
-  category: string;
-  value: number;
+  data: Array<{
+    groupingKey?: string;
+    category: string;
+    value: number;
+  }>;
 };
 
 export type Paragraph = {
@@ -30,7 +33,7 @@ export type ExpectedSqlColumns = LineChart | PieChart | Paragraph;
 
 export const expectedSqlColumns = `
   For line chart, the columns should follow this format: {x:string, y:number, groupingKey?:string}. groupingKey should be a name, id, or some identifier.
-  For pie chart, the columns should be: category and value.
+  For pie chart, the columns should be: {category: string, value: number, groupingKey?:string}. groupingKey should be a name, id, or some identifier.
   For paragraph, the columns should follow this format: {text: string}.
 `;
 export const expectedOutput = `

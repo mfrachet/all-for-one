@@ -11,7 +11,7 @@ const LineChart = lazy(() =>
 );
 
 const PieChart = lazy(() =>
-  import("./charts/PieChart").then((m) => ({
+  import("./charts/PieChart/PieChart").then((m) => ({
     default: m.PieChart,
   }))
 );
@@ -20,13 +20,7 @@ export const MessageFactory = ({ message }: { message: MessageEntry }) => {
   return (
     <Message isResponse={message.isResponse}>
       {message.type === "lineChart" && (
-        <Suspense
-          fallback={
-            <ChartWrapper>
-              <Spinner />
-            </ChartWrapper>
-          }
-        >
+        <Suspense fallback={<Spinner />}>
           <ChartWrapper>
             <LineChart data={message.data} />
           </ChartWrapper>
@@ -34,13 +28,7 @@ export const MessageFactory = ({ message }: { message: MessageEntry }) => {
       )}
       {message.type === "paragraph" && <p>{message.data}</p>}
       {message.type === "pieChart" && (
-        <Suspense
-          fallback={
-            <ChartWrapper>
-              <Spinner />
-            </ChartWrapper>
-          }
-        >
+        <Suspense fallback={<Spinner />}>
           <ChartWrapper>
             <PieChart data={message.data} />
           </ChartWrapper>

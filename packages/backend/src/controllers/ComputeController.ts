@@ -23,6 +23,8 @@ export class ComputeController {
   ): Promise<ExpectedOutput | null> {
     const prompt = generateClickhouseQuery(input);
 
+    console.log("[AI] user input", input);
+
     const cachedCtx = await this._getCachedContext(conversationId);
     cachedCtx.push({ role: "user", content: prompt });
 
@@ -32,14 +34,14 @@ export class ComputeController {
     await this.cacheService.set(conversationId, cachedCtx);
 
     if (response) {
-      console.log({ response });
       const responseObj = JSON.parse(response);
       if (responseObj.sqlQuery && responseObj.type && responseObj.title) {
-        console.log(responseObj.sqlQuery);
         const resultSet = await clickhouseClient.query({
           query: responseObj.sqlQuery,
           format: "JSONEachRow",
         });
+
+        console.log("[Clickhouse] sql query generated", responseObj.sqlQuery);
 
         const rows: ExpectedSqlColumns = {
           type: responseObj.type,
@@ -51,6 +53,7 @@ export class ComputeController {
           responseObj.title,
           rows
         );
+
         return formattedResponse;
       }
     }

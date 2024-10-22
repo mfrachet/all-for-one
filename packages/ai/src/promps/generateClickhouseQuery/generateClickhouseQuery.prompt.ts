@@ -10,6 +10,7 @@ export const generateClickhouseQuery = (input: string) => `
     The sql query should provide columns matching the next criteria: ${expectedSqlColumns}.
     The sql query should be a valid ClickHouse SQL query only and strictly following the DDL passed in context.
     The sql query should always be ordered by the "type" column first.
+    Don't apply ORDER BY clause by default but only when really needed.
 
     Here's the question: "${input}".
 `;
