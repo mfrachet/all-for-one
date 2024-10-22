@@ -1,6 +1,7 @@
 import { ResponsivePie } from "@nivo/pie";
 import { Tooltip, TooltipData } from "./Tooltip";
 import { PieChartText } from "./PieChartText";
+import { capitalize } from "../../../helpers/capitalize";
 
 export interface PieChartProps {
   data: Array<{
@@ -46,6 +47,9 @@ export const PieChart = ({ data }: PieChartProps) => {
       padAngle={1}
       enableArcLinkLabels={true}
       enableArcLabels={true}
+      arcLinkLabel={(d) => {
+        return capitalize(d.data.label);
+      }}
       legends={[]}
       layers={[
         "arcLabels",
