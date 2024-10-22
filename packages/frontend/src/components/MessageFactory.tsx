@@ -1,38 +1,23 @@
 import { MessageEntry } from "../types";
-import { lazy, Suspense } from "react";
+
 import { Message } from "./Message";
 import { ChartWrapper } from "./ChartWrapper";
-import { Spinner } from "./Spinner";
-
-const LineChart = lazy(() =>
-  import("./charts/LineChart/LineChart").then((m) => ({
-    default: m.LineChart,
-  }))
-);
-
-const PieChart = lazy(() =>
-  import("./charts/PieChart/PieChart").then((m) => ({
-    default: m.PieChart,
-  }))
-);
+import { LineChart } from "./charts/LineChart/LineChart";
+import { PieChart } from "./charts/PieChart/PieChart";
 
 export const MessageFactory = ({ message }: { message: MessageEntry }) => {
   return (
     <Message isResponse={message.isResponse}>
       {message.type === "lineChart" && (
-        <Suspense fallback={<Spinner />}>
-          <ChartWrapper>
-            <LineChart data={message.data} />
-          </ChartWrapper>
-        </Suspense>
+        <ChartWrapper>
+          <LineChart data={message.data} />
+        </ChartWrapper>
       )}
       {message.type === "paragraph" && <p>{message.data}</p>}
       {message.type === "pieChart" && (
-        <Suspense fallback={<Spinner />}>
-          <ChartWrapper size="sm">
-            <PieChart data={message.data} />
-          </ChartWrapper>
-        </Suspense>
+        <ChartWrapper size="sm">
+          <PieChart data={message.data} />
+        </ChartWrapper>
       )}
     </Message>
   );
