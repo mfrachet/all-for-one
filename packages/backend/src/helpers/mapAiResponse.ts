@@ -48,6 +48,7 @@ const isParagraphColumns = (
 
 export const mapAiResponse = (
   type: SqlChartType,
+  title: string,
   response: Array<ExpectedSqlColumns<typeof type>>
 ): ExpectedOutput => {
   if (!type) {
@@ -67,8 +68,8 @@ export const mapAiResponse = (
       type: "lineChart",
       data: [
         {
-          color: getRandomPastelColor(),
-          id: "1",
+          color: getRandomPastelColor(title),
+          id: title,
           data: response.map((item) => ({
             x: item.x,
             y: item.y,
@@ -83,10 +84,10 @@ export const mapAiResponse = (
     const pieChartOutput: PieChartOutput = {
       type: "pieChart",
       data: response.map((item) => ({
-        id: "1",
+        id: title,
         label: item.category,
         value: item.value,
-        color: getRandomPastelColor(),
+        color: getRandomPastelColor(title),
       })),
     };
     return [pieChartOutput];

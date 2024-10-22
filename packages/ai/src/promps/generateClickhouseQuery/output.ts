@@ -33,6 +33,7 @@ export type SqlChartType = "lineChart" | "pieChart" | "paragraph";
 
 export type ExpectedSqlOutput<T extends SqlChartType> = {
   type: T;
+  title: string; // should be a short title of 2-3 words max
   sqlQuery: string;
   columns: ExpectedSqlColumns<T>; // Add the columns field based on the chart type
 };
