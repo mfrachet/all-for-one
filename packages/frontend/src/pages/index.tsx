@@ -11,19 +11,11 @@ import { useSuggestions } from "../modules/charts/contexts/useSuggestions";
 
 export const DashboardIndex = () => {
   const charts = useCharts();
-  const suggestions = useSuggestions();
+  const suggestionsPromise = useSuggestions();
 
   const paragraphs = charts.filter((c) => c.type === "paragraph");
   const lineCharts = charts.filter((c) => c.type === "lineChart");
   const pieCharts = charts.filter((c) => c.type === "pieChart");
-
-  const suggestionParagraphs = suggestions.filter(
-    (s) => s.type === "paragraph"
-  );
-  const suggestionLineCharts = suggestions.filter(
-    (s) => s.type === "lineChart"
-  );
-  const suggestionPieCharts = suggestions.filter((s) => s.type === "pieChart");
 
   const chartGridCss = "grid grid-cols-3 gap-4 pb-4";
 
@@ -58,7 +50,7 @@ export const DashboardIndex = () => {
             </div>
           )}
 
-          <SuggestionList suggestions={suggestionParagraphs} />
+          <SuggestionList suggestions={suggestionsPromise} type="paragraph" />
         </Section>
 
         <Section
@@ -82,7 +74,7 @@ export const DashboardIndex = () => {
             </div>
           )}
 
-          <SuggestionList suggestions={suggestionLineCharts} />
+          <SuggestionList suggestions={suggestionsPromise} type="lineChart" />
         </Section>
 
         <Section
@@ -106,7 +98,7 @@ export const DashboardIndex = () => {
             </div>
           )}
 
-          <SuggestionList suggestions={suggestionPieCharts} />
+          <SuggestionList suggestions={suggestionsPromise} type="pieChart" />
         </Section>
       </div>
     </>

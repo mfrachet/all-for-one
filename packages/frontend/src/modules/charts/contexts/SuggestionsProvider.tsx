@@ -1,8 +1,8 @@
-import { Suggestion } from "../types";
+import { SuggestionDict } from "../types";
 import { SuggestionsContext } from "./SuggestionsContext";
 
 export interface SuggestionsProviderProps {
-  suggestions: Suggestion[];
+  suggestions: Promise<SuggestionDict>;
   children: React.ReactNode;
 }
 

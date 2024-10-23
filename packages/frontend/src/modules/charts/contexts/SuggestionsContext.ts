@@ -1,4 +1,10 @@
 import { createContext } from "react";
-import { Suggestion } from "../types";
+import { SuggestionDict } from "../types";
 
-export const SuggestionsContext = createContext<Suggestion[]>([]);
+export const SuggestionsContext = createContext<Promise<SuggestionDict>>(
+  Promise.resolve({
+    lineChart: [],
+    pieChart: [],
+    paragraph: [],
+  })
+);
