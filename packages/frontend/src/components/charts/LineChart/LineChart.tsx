@@ -4,9 +4,9 @@ import { AxisTickSize, AxisTickPadding } from "./constants";
 import { Tooltip } from "./Tooltip";
 import { ActivePoint } from "./ActivePoint";
 import { customizedTheme } from "./styles";
-import { isDate } from "../../../helpers/isDate";
-import { formatDate } from "../../../helpers/formatDate";
-import { capitalize } from "../../../helpers/capitalize";
+import { capitalize } from "../../../modules/misc/helpers/capitalize";
+import { formatDate } from "../../../modules/misc/helpers/formatDate";
+import { isDate } from "../../../modules/misc/helpers/isDate";
 
 export interface LineChartProps {
   data: LineSvgProps["data"];

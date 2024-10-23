@@ -4,17 +4,24 @@ import cors from "cors";
 import bodyParser from "body-parser";
 import { ComputeController } from "./controllers/ComputeController";
 import { CachingService } from "./services/CachingService";
-import { AiContext } from "./types";
 import { ComputeService } from "./services/ComputeService";
+import { PersistentChartService } from "./services/PersistentChartService";
+import { PersistentChartController } from "./controllers/PersistentChartController";
 
 const app = express();
 
 app.use(cors());
 app.use(bodyParser.json());
 
-const cacheService = new CachingService<AiContext>();
+const cacheService = new CachingService();
+const persistentChartService = new PersistentChartService(cacheService);
+
 const computeService = new ComputeService();
 const computeController = new ComputeController(computeService, cacheService);
+const persistentChartController = new PersistentChartController(
+  persistentChartService,
+  computeService
+);
 
 app.post("/compute/:id", async (req, res) => {
   const conversationId = req.params.id;
@@ -32,6 +39,20 @@ app.post("/compute/:id", async (req, res) => {
     console.error({ error, response });
     res.status(500).send({ error: "Internal server error", details: error });
   }
+});
+
+app.post("/charts/:id", async (req, res) => {
+  const chartId = req.params.id;
+
+  await persistentChartController.saveChart(chartId);
+
+  res.status(201).end();
+});
+
+app.get("/charts", async (req, res) => {
+  const charts = await persistentChartController.getCharts();
+
+  res.status(200).send(charts);
 });
 
 app.listen(3000, () => {

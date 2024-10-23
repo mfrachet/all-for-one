@@ -1,24 +1,23 @@
-import { MessageEntry } from "../types";
-
+import { AiResponseEntry } from "../types";
 import { Message } from "./Message";
 import { ChartWrapper } from "./ChartWrapper";
-import { LineChart } from "./charts/LineChart/LineChart";
-import { PieChart } from "./charts/PieChart/PieChart";
+import { Form } from "react-router-dom";
+import { ChartFactory } from "./ChartFactory";
+import React from "react";
 
-export const MessageFactory = ({ message }: { message: MessageEntry }) => {
+export const MessageFactory = ({ message }: { message: AiResponseEntry }) => {
+  const Wrapper = message.type === "paragraph" ? React.Fragment : ChartWrapper;
   return (
     <Message isResponse={message.isResponse}>
-      {message.type === "lineChart" && (
-        <ChartWrapper>
-          <LineChart data={message.data} />
-        </ChartWrapper>
-      )}
-      {message.type === "paragraph" && <p>{message.data}</p>}
-      {message.type === "pieChart" && (
-        <ChartWrapper size="full">
-          <PieChart data={message.data} />
-        </ChartWrapper>
-      )}
+      <Form method="post" action="/dashboard">
+        <input type="hidden" name="chartId" value={message.id} />
+
+        <Wrapper>
+          <ChartFactory chart={message} />
+        </Wrapper>
+
+        <button type="submit">Pin</button>
+      </Form>
     </Message>
   );
 };

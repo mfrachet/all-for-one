@@ -1,8 +1,8 @@
 import type { Point, SliceTooltipProps } from "@nivo/line";
 import type { ReactNode } from "react";
-import { capitalize } from "../../../helpers/capitalize";
-import { formatDate } from "../../../helpers/formatDate";
-import { isDate } from "../../../helpers/isDate";
+import { capitalize } from "../../../modules/misc/helpers/capitalize";
+import { formatDate } from "../../../modules/misc/helpers/formatDate";
+import { isDate } from "../../../modules/misc/helpers/isDate";
 
 type LineChartPoint = { data: Point["data"] & { Icon?: ReactNode } } & Point;
 

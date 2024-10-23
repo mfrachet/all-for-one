@@ -6,6 +6,7 @@ import {
   PieChartOutput,
 } from "../types";
 import { getRandomPastelColors } from "./pastelColors";
+import { nanoid } from "nanoid";
 
 export const mapAiResponse = (
   type: SqlChartType,
@@ -18,6 +19,7 @@ export const mapAiResponse = (
 
   if (response.type === "paragraph") {
     const paragraphOutput: ParagraphOutput = {
+      id: nanoid(),
       type: "paragraph",
       data: response?.data[0]?.text ?? "No data found",
     };
@@ -38,6 +40,7 @@ export const mapAiResponse = (
 
     const colors = getRandomPastelColors(Object.keys(groupedByKey).length);
     const lineChartOutput: LineChartOutput = {
+      id: nanoid(),
       type: "lineChart",
       data: Object.entries(groupedByKey).map(([groupingKey, data], index) => ({
         color: colors[index],
@@ -52,6 +55,7 @@ export const mapAiResponse = (
   if (response.type === "pieChart") {
     const colors = getRandomPastelColors(response.data.length);
     const pieChartOutput: PieChartOutput = {
+      id: nanoid(),
       type: "pieChart",
       data: response.data.map((item, index) => ({
         id: item.category,
