@@ -26,7 +26,7 @@ export const CollapsibleSide = ({
     >
       <button
         onClick={() => setOpen((s) => !s)}
-        className={`absolute top-4 p-2 rounded-xl hover:bg-gray-100 active:bg-gray-200 ${
+        className={`absolute top-4 p-2 rounded-xl hover:bg-gray-100 active:bg-gray-200 z-10 ${
           iconSide === "left" ? "left-2" : "right-2"
         }`}
       >
