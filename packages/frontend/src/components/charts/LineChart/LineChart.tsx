@@ -41,7 +41,7 @@ export const LineChart = ({ data }: LineChartProps) => {
       axisBottom={{
         tickSize: AxisTickSize,
         tickPadding: AxisTickPadding,
-        tickValues: 10,
+        tickValues: 8,
         format: (value) => formatDate(value),
       }}
       axisLeft={null}

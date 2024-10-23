@@ -36,7 +36,6 @@ async function fetchDataFromMixpanel(
       params: {
         from_date: fromDate,
         to_date: toDate,
-        limit: 2,
       },
       auth: {
         username: MIXPANEL_SECRET || "", // Secret is used as the username
@@ -58,10 +57,9 @@ async function fetchDataFromMixpanel(
 async function insertDataIntoClickHouse(data: any[]) {
   try {
     const totalEvents = data.length;
-    const batchSize = 100;
+    const batchSize = 1000;
     for (let i = 0; i < totalEvents; i += batchSize) {
       const batch = data.slice(i, i + batchSize);
-      console.log(batch);
 
       const query = `
       INSERT INTO mixpanel_events (event_name, event_id, community_id, created_at)
@@ -107,7 +105,7 @@ async function createTableIfNotExists() {
 async function main() {
   await createTableIfNotExists();
 
-  const fromDate = dayjs("2024-10-21"); // Customize your start date
+  const fromDate = dayjs("2024-10-01"); // Customize your start date
   const today = dayjs().startOf("day"); // Get today's date
 
   let currentDate = fromDate;

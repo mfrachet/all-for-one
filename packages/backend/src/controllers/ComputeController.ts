@@ -61,7 +61,8 @@ export class ComputeController {
       );
 
       return formattedResponse;
-    } catch {
+    } catch (e) {
+      console.error("[Compute] error", e);
       return null;
     }
   }

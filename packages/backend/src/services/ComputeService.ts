@@ -4,6 +4,7 @@ import { mapAiResponse } from "../helpers/mapAiResponse";
 
 export class ComputeService {
   async execute(type: SqlChartType, title: string, sql: string) {
+    console.log("[Compute] sql", sql);
     const resultSet = await clickhouseClient.query({
       query: sql,
       format: "JSONEachRow",
