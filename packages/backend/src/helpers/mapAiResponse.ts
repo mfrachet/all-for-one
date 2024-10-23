@@ -5,7 +5,7 @@ import {
   ParagraphOutput,
   PieChartOutput,
 } from "../types";
-import { getRandomPastelColor } from "./getRandomPastelColor";
+import { getRandomPastelColors } from "./pastelColors";
 
 export const mapAiResponse = (
   type: SqlChartType,
@@ -36,10 +36,11 @@ export const mapAiResponse = (
       return acc;
     }, {} as Record<string, Array<{ x: number | string | Date; y: number }>>);
 
+    const colors = getRandomPastelColors(Object.keys(groupedByKey).length);
     const lineChartOutput: LineChartOutput = {
       type: "lineChart",
-      data: Object.entries(groupedByKey).map(([groupingKey, data]) => ({
-        color: getRandomPastelColor(groupingKey),
+      data: Object.entries(groupedByKey).map(([groupingKey, data], index) => ({
+        color: colors[index],
         id: groupingKey,
         data,
       })),
@@ -49,13 +50,14 @@ export const mapAiResponse = (
   }
 
   if (response.type === "pieChart") {
+    const colors = getRandomPastelColors(response.data.length);
     const pieChartOutput: PieChartOutput = {
       type: "pieChart",
-      data: response.data.map((item) => ({
-        id: title,
+      data: response.data.map((item, index) => ({
+        id: item.category,
         label: item.category,
         value: Number(item.value),
-        color: getRandomPastelColor(item.category),
+        color: colors[index],
       })),
     };
     return [pieChartOutput];

@@ -8,7 +8,7 @@ type LineChartPoint = { data: Point["data"] & { Icon?: ReactNode } } & Point;
 
 export const Tooltip = ({ slice }: SliceTooltipProps) => {
   const label = String(slice.points[0].data.x);
-  const formattedLabel = isDate(label) ? formatDate(label) : capitalize(label);
+  const formattedLabel = formatDate(label);
 
   return (
     <div className="bg-white rounded-xl shadow-md border border-gray-200 min-w-[200px] px-2 py-1">

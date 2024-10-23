@@ -1,7 +1,4 @@
 import { ResponsivePie } from "@nivo/pie";
-import { Tooltip, TooltipData } from "./Tooltip";
-import { PieChartText } from "./PieChartText";
-import { capitalize } from "../../../helpers/capitalize";
 
 export interface PieChartProps {
   data: Array<{
@@ -12,53 +9,38 @@ export interface PieChartProps {
   }>;
 }
 
-type LayerProps = {
-  centerX: number;
-  centerY: number;
-};
-
-const ChartText = ({
-  centerX,
-  centerY,
-  title,
-}: LayerProps & { title: string }) => (
-  <PieChartText
-    centerX={centerX}
-    centerY={centerY}
-    title={title}
-    description={"items counted"}
-  />
-);
-const getChartText = (title: string) => (props: LayerProps) =>
-  <ChartText {...props} title={title} />;
-
-const margin = 60;
-
 export const PieChart = ({ data }: PieChartProps) => {
-  const count = data.reduce((acc, curr) => acc + curr.value, 0);
-
   return (
     <ResponsivePie
-      animate={false}
-      colors={{ datum: "data.color" }}
-      margin={{ top: margin, right: margin, bottom: margin + 16, left: margin }}
       data={data}
-      innerRadius={0.6}
-      padAngle={1}
-      enableArcLinkLabels={true}
-      enableArcLabels={true}
-      arcLinkLabel={(d) => {
-        return capitalize(d.data.label);
+      margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
+      innerRadius={0.5}
+      padAngle={0.7}
+      cornerRadius={3}
+      activeOuterRadiusOffset={8}
+      borderWidth={1}
+      colors={{ datum: "data.color" }}
+      borderColor={{
+        from: "color",
+        modifiers: [["darker", 0.2]],
       }}
-      legends={[]}
-      layers={[
-        "arcLabels",
-        "arcLinkLabels",
-        "legends",
-        "arcs",
-        getChartText(count.toString()),
+      arcLinkLabelsSkipAngle={10}
+      arcLinkLabelsTextColor="#333333"
+      arcLinkLabelsThickness={2}
+      arcLinkLabelsColor={{ from: "color" }}
+      arcLabelsSkipAngle={10}
+      arcLabelsTextColor={{
+        from: "color",
+        modifiers: [["darker", 2]],
+      }}
+      fill={[
+        {
+          match: {
+            id: "*",
+          },
+          id: "lines",
+        },
       ]}
-      tooltip={({ datum }) => <Tooltip datum={datum as TooltipData} />}
     />
   );
 };

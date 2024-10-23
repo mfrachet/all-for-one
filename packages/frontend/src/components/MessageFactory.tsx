@@ -15,7 +15,7 @@ export const MessageFactory = ({ message }: { message: MessageEntry }) => {
       )}
       {message.type === "paragraph" && <p>{message.data}</p>}
       {message.type === "pieChart" && (
-        <ChartWrapper size="sm">
+        <ChartWrapper size="full">
           <PieChart data={message.data} />
         </ChartWrapper>
       )}
