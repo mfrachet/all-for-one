@@ -17,6 +17,7 @@ type ParagraphOutput = {
   title: string;
   type: "paragraph";
   data: string;
+  color: string;
 };
 
 type PieChartOutput = {

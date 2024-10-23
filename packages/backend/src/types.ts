@@ -23,6 +23,7 @@ export type ParagraphOutput = {
   title: string;
   type: "paragraph";
   data: string;
+  color: string;
 };
 
 export type PieChartOutput = {

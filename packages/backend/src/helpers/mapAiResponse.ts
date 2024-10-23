@@ -5,7 +5,7 @@ import {
   ParagraphOutput,
   PieChartOutput,
 } from "../types";
-import { getRandomPastelColors } from "./pastelColors";
+import { getRandomPastelColor, getRandomPastelColors } from "./pastelColors";
 import { nanoid } from "nanoid";
 
 export const mapAiResponse = (
@@ -22,6 +22,7 @@ export const mapAiResponse = (
       id: nanoid(),
       title,
       type: "paragraph",
+      color: getRandomPastelColor(title),
       data: response?.data[0]?.text ?? "No data found",
     };
     return [paragraphOutput];

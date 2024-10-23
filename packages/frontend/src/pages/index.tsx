@@ -47,9 +47,14 @@ export const DashboardIndex = () => {
         >
           <SuggestionList suggestions={suggestionParagraphs} />
 
-          <div className="flex flex-row gap-4">
+          <div className="flex flex-row gap-4 pt-4">
             {paragraphs.map((p) => (
-              <BigStat key={p.id} title={p.title} value={p.data} color="red" />
+              <BigStat
+                key={p.id}
+                title={p.title}
+                value={p.data}
+                color={p.color}
+              />
             ))}
           </div>
         </Section>
