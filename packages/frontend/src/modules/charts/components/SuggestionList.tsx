@@ -9,6 +9,8 @@ export interface SuggestionListProps {
 export const SuggestionList = ({ suggestions }: SuggestionListProps) => {
   const { addMessage } = useMessages();
 
+  if (suggestions.length === 0) return null;
+
   return (
     <div>
       <h3 className="text-xs text-gray-500 pb-2">Suggestions</h3>
