@@ -1,4 +1,4 @@
-import { ActionFunction } from "react-router-dom";
+import { ActionFunction, redirect } from "react-router-dom";
 import { saveChart } from "../modules/charts/services/saveChart";
 
 export const saveChartAction: ActionFunction = async ({ request }) => {
@@ -8,5 +8,5 @@ export const saveChartAction: ActionFunction = async ({ request }) => {
 
   await saveChart(chartId);
 
-  return null;
+  return redirect("/");
 };
