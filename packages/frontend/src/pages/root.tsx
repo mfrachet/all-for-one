@@ -66,7 +66,7 @@ export const DashboardRoot = () => {
           <main className="grid grid-cols-[auto_1fr] h-full">
             <CollapsibleSide
               className="h-full border-r border-gray-100 relative bg-white"
-              widthClass=" w-64"
+              widthClass="w-64"
               icon={(open) => (open ? <ChevronLeftIcon /> : <Menu />)}
               iconSide="right"
               initialOpen={false}
@@ -86,7 +86,7 @@ export const DashboardRoot = () => {
 
             <CollapsibleSide
               className="overflow-hidden border-l border-gray-100 h-full px-4 py-4 fixed right-0 top-0 bottom-0 bg-white"
-              widthClass="w-4/12"
+              widthClass="w-1/2"
               icon={(open) =>
                 open ? (
                   <ChevronRightIcon />
