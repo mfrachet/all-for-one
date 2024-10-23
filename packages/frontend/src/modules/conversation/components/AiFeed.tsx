@@ -1,29 +1,17 @@
-import { useState, useEffect } from "react";
 import { Message } from "../../../components/Message";
 import { MessageFactory } from "../../../components/MessageFactory";
 import { QuestionInput } from "../../../components/QuestionInput";
 import { Spinner } from "../../../components/Spinner";
-import { AiResponseEntry } from "../../../types";
 import { useScrollDown } from "../../misc/hooks/useScrollDown";
-import { useSendConversationMessage } from "../hooks/useSendConversationMessage";
-import { nanoid } from "nanoid";
+import { useMessages } from "../context/useMessages";
 
 export interface AiFeedProps {
-  id: string;
   emptyState?: React.ReactNode;
 }
 
-export const AiFeed = ({ id, emptyState }: AiFeedProps) => {
-  const [messages, setMessages] = useState<Array<AiResponseEntry>>([]);
+export const AiFeed = ({ emptyState }: AiFeedProps) => {
+  const { messages, addMessage, isPending } = useMessages();
   const containerRef = useScrollDown([messages]);
-
-  const mutation = useSendConversationMessage(id!, (response) => {
-    setMessages((s) =>
-      s.concat(response.map((r) => ({ ...r, isResponse: true })))
-    );
-  });
-
-  useEffect(() => setMessages([]), [id]);
 
   return (
     <div className="h-full flex flex-col">
@@ -38,7 +26,7 @@ export const AiFeed = ({ id, emptyState }: AiFeedProps) => {
           ))}
         </ol>
 
-        {mutation.isPending && (
+        {isPending && (
           <Message isResponse>
             <Spinner />
           </Message>
@@ -47,10 +35,7 @@ export const AiFeed = ({ id, emptyState }: AiFeedProps) => {
 
       <QuestionInput
         onSubmit={(str: string) => {
-          setMessages((s) =>
-            s.concat([{ type: "paragraph", data: str, id: nanoid() }])
-          );
-          mutation.mutate(str);
+          addMessage(str);
         }}
       />
     </div>

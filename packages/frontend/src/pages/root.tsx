@@ -12,6 +12,7 @@ import {
 import { getMe } from "../modules/user/services/getMe";
 import { getCharts } from "../modules/charts/services/getCharts";
 import { nanoid } from "nanoid";
+import { MessageProvider } from "../modules/conversation/context/MessageProvider";
 
 export const rootLoader: LoaderFunction = async () => {
   try {
@@ -43,42 +44,44 @@ const EmptyConversation = () => {
 
 export const DashboardRoot = () => {
   return (
-    <main className="grid grid-cols-[auto_1fr] h-full">
-      <CollapsibleSide
-        className="h-full border-r border-gray-100 relative bg-white"
-        widthClass=" w-64"
-        icon={(open) => (open ? <ChevronLeftIcon /> : <Menu />)}
-        iconSide="right"
-        initialOpen={false}
-      >
-        <div className="pt-5">
-          <Navbar>
-            <NavItem to="/dashboard" icon={<HomeIcon />}>
-              Dashboard
-            </NavItem>
-          </Navbar>
-        </div>
-      </CollapsibleSide>
+    <MessageProvider conversationId="1">
+      <main className="grid grid-cols-[auto_1fr] h-full">
+        <CollapsibleSide
+          className="h-full border-r border-gray-100 relative bg-white"
+          widthClass=" w-64"
+          icon={(open) => (open ? <ChevronLeftIcon /> : <Menu />)}
+          iconSide="right"
+          initialOpen={false}
+        >
+          <div className="pt-5">
+            <Navbar>
+              <NavItem to="/dashboard" icon={<HomeIcon />}>
+                Dashboard
+              </NavItem>
+            </Navbar>
+          </div>
+        </CollapsibleSide>
 
-      <div className="pt-4 pb-20 pl-12 pr-24 bg-gray-50 h-full">
-        <Outlet />
-      </div>
-
-      <CollapsibleSide
-        className="overflow-hidden border-l border-gray-100 h-full px-4 py-4 fixed right-0 top-0 bottom-0 bg-white"
-        widthClass="w-4/12"
-        icon={(open) =>
-          open ? (
-            <ChevronRightIcon />
-          ) : (
-            <MessageCircle className="text-emerald-500" />
-          )
-        }
-      >
-        <div className="pt-12 h-full">
-          <AiFeed id="1" emptyState={<EmptyConversation />} />
+        <div className="pt-4 pb-20 pl-12 pr-24 bg-gray-50 h-full">
+          <Outlet />
         </div>
-      </CollapsibleSide>
-    </main>
+
+        <CollapsibleSide
+          className="overflow-hidden border-l border-gray-100 h-full px-4 py-4 fixed right-0 top-0 bottom-0 bg-white"
+          widthClass="w-4/12"
+          icon={(open) =>
+            open ? (
+              <ChevronRightIcon />
+            ) : (
+              <MessageCircle className="text-emerald-500" />
+            )
+          }
+        >
+          <div className="pt-12 h-full">
+            <AiFeed emptyState={<EmptyConversation />} />
+          </div>
+        </CollapsibleSide>
+      </main>
+    </MessageProvider>
   );
 };

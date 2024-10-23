@@ -4,6 +4,7 @@ import { Button } from "../components/Button";
 import { ChartSpline, SquarePen } from "lucide-react";
 import { nanoid } from "nanoid";
 import { Logo } from "../components/Logo";
+import { MessageProvider } from "../modules/conversation/context/MessageProvider";
 
 const EmptyConversation = () => {
   return (
@@ -36,15 +37,17 @@ export const ConversationsId = () => {
   const { id } = useParams();
 
   return (
-    <main className="h-full py-4 pt-20 max-w-4xl mx-auto relative">
-      <div className="absolute top-4 right-4 flex flex-row justify-between gap-2 w-full items-center">
-        <Logo />
-        <Button as={Link} to={`/c/${nanoid()}`} icon={<SquarePen />}>
-          Start over
-        </Button>
-      </div>
+    <MessageProvider conversationId={id!}>
+      <main className="h-full py-4 pt-20 max-w-4xl mx-auto relative">
+        <div className="absolute top-4 right-4 flex flex-row justify-between gap-2 w-full items-center">
+          <Logo />
+          <Button as={Link} to={`/c/${nanoid()}`} icon={<SquarePen />}>
+            Start over
+          </Button>
+        </div>
 
-      <AiFeed id={id!} key={id!} emptyState={<EmptyConversation />} />
-    </main>
+        <AiFeed key={id!} emptyState={<EmptyConversation />} />
+      </main>
+    </MessageProvider>
   );
 };
