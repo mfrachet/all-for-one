@@ -9,7 +9,7 @@ export const Section = ({ children, title }: SectionProps) => {
   return (
     <section>
       <div className="pb-4">{title}</div>
-      {children}
+      <div className="pl-4">{children}</div>
     </section>
   );
 };

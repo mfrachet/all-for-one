@@ -45,7 +45,7 @@ export const DashboardRoot = () => {
         </div>
       </CollapsibleSide>
 
-      <div className="py-4 pl-12 pr-24 bg-gray-50 h-full">
+      <div className="pt-4 pb-20 pl-12 pr-24 bg-gray-50 h-full">
         <Outlet />
       </div>
 

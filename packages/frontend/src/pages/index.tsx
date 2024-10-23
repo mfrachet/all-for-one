@@ -8,6 +8,7 @@ import { LoaderFunction, useLoaderData } from "react-router-dom";
 import { AiResponseEntry } from "../types";
 import { PieChart } from "../components/charts/PieChart/PieChart";
 import { BadgeDollarSign, ChartLine, ChartPie } from "lucide-react";
+import { SuggestionList } from "../modules/charts/components/SuggestionList";
 
 export const dashboardIndexLoader: LoaderFunction = async () => {
   const charts = await getCharts();
@@ -21,6 +22,8 @@ export const DashboardIndex = () => {
   const paragraphs = charts.filter((c) => c.type === "paragraph");
   const lineCharts = charts.filter((c) => c.type === "lineChart");
   const pieCharts = charts.filter((c) => c.type === "pieChart");
+
+  const chartGridCss = "grid grid-cols-3 gap-4 pt-4";
 
   return (
     <>
@@ -40,6 +43,8 @@ export const DashboardIndex = () => {
             </SectionHeader>
           }
         >
+          <SuggestionList suggestions={["All", "All", "All", "All"]} />
+
           <div className="flex flex-row gap-4">
             {paragraphs.map((p) => (
               <BigStat key={p.id} title="title" value={p.data} color="red" />
@@ -58,7 +63,9 @@ export const DashboardIndex = () => {
             </SectionHeader>
           }
         >
-          <div className="grid grid-cols-3 gap-4">
+          <SuggestionList suggestions={["All", "All", "All", "All"]} />
+
+          <div className={chartGridCss}>
             {lineCharts.map((c) => (
               <ChartCard key={c.id} title={"Evolutin of the trends"}>
                 <LineChart data={c.data} />
@@ -78,7 +85,9 @@ export const DashboardIndex = () => {
             </SectionHeader>
           }
         >
-          <div className="grid grid-cols-3 gap-4">
+          <SuggestionList suggestions={["All", "All", "All", "All"]} />
+
+          <div className={chartGridCss}>
             {pieCharts.map((c) => (
               <ChartCard key={c.id} title={"Evolutin of the trends"}>
                 <PieChart data={c.data} />
