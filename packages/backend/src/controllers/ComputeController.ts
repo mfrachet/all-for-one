@@ -1,13 +1,15 @@
 import { getOpenAIResponse } from "@all-for-one/ai";
+
 import { generateClickhouseQuery } from "@all-for-one/ai";
 import { CachingService } from "../services/CachingService";
-import { AiContext, ExpectedOutput } from "../types";
+import { AiContext, ExpectedOutput, PersistentChart } from "../types";
 
 import { ComputeService } from "../services/ComputeService";
+import { nanoid } from "nanoid";
 export class ComputeController {
   constructor(
     private computeService: ComputeService,
-    private cacheService: CachingService<AiContext>
+    private cacheService: CachingService
   ) {}
 
   async _getCachedContext(conversationId: string) {
@@ -44,6 +46,18 @@ export class ComputeController {
         responseObj.type,
         responseObj.title,
         responseObj.sqlQuery
+      );
+
+      const persistentChart: PersistentChart = {
+        id: formattedResponse[0].id,
+        type: responseObj.type,
+        title: responseObj.title,
+        sqlQuery: responseObj.sqlQuery,
+      };
+
+      await this.cacheService.set(
+        `chart:${persistentChart.id}`,
+        persistentChart
       );
 
       return formattedResponse;

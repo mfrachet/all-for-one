@@ -1,4 +1,7 @@
-export const requestData = async (conversationId: string, input: string) => {
+export const sendConversationMessage = async (
+  conversationId: string,
+  input: string
+) => {
   const response = await fetch(
     `http://localhost:3000/compute/${conversationId}`,
     {

@@ -1,29 +1,44 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import {
-  createBrowserRouter,
-  redirect,
-  RouterProvider,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "@fontsource-variable/inter";
 import "./index.css";
 
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { nanoid } from "nanoid";
+import { QueryClientProvider } from "@tanstack/react-query";
 import { ConversationsId } from "./pages/conversations.$id";
-const queryClient = new QueryClient();
+import { queryClient } from "./modules/misc/queryClient";
+import { DashboardRoot, rootLoader } from "./pages/dashboard.root";
+import { DashboardIndex, dashboardIndexLoader } from "./pages/dashboard.index";
+import { LoginPage } from "./pages/login";
+import { saveChartAction } from "./actions/saveChartAction";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: null,
-    loader: async () => {
-      return redirect(`/c/${nanoid()}`);
-    },
+    loader: rootLoader,
+    children: [
+      {
+        path: "/dashboard",
+        action: saveChartAction,
+        element: <DashboardRoot />,
+        children: [
+          {
+            index: true,
+            loader: dashboardIndexLoader,
+            element: <DashboardIndex />,
+          },
+        ],
+      },
+      {
+        path: "/c/:id",
+        element: <ConversationsId />,
+      },
+    ],
   },
   {
-    path: "/c/:id",
-    element: <ConversationsId />,
+    path: "/login",
+    element: <LoginPage />,
   },
 ]);
 

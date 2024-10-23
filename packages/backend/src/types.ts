@@ -5,6 +5,7 @@ export type AiContext = Array<{
 
 // Keep this and copy paste it in the prompt
 export type LineChartOutput = {
+  id: string;
   type: "lineChart";
   data: Array<{
     id: string;
@@ -17,11 +18,13 @@ export type LineChartOutput = {
 };
 
 export type ParagraphOutput = {
+  id: string;
   type: "paragraph";
   data: string;
 };
 
 export type PieChartOutput = {
+  id: string;
   type: "pieChart";
   data: Array<{
     id: string;
@@ -37,3 +40,10 @@ export type FormattedResponse =
   | PieChartOutput;
 
 export type ExpectedOutput = FormattedResponse[];
+
+export type PersistentChart = {
+  id: string;
+  title: string;
+  sqlQuery: string;
+  type: "lineChart" | "pieChart" | "paragraph";
+};
