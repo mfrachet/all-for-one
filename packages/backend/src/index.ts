@@ -55,6 +55,12 @@ app.get("/charts", async (req, res) => {
   res.status(200).send(charts);
 });
 
+app.get("/charts/suggestions", async (req, res) => {
+  const suggestions = await persistentChartController.getSuggestions();
+
+  res.status(200).send(suggestions);
+});
+
 app.listen(3000, () => {
   console.log("Server is running on port 3000");
 });

@@ -20,6 +20,7 @@ export const mapAiResponse = (
   if (response.type === "paragraph") {
     const paragraphOutput: ParagraphOutput = {
       id: nanoid(),
+      title,
       type: "paragraph",
       data: response?.data[0]?.text ?? "No data found",
     };
@@ -41,6 +42,7 @@ export const mapAiResponse = (
     const colors = getRandomPastelColors(Object.keys(groupedByKey).length);
     const lineChartOutput: LineChartOutput = {
       id: nanoid(),
+      title,
       type: "lineChart",
       data: Object.entries(groupedByKey).map(([groupingKey, data], index) => ({
         color: colors[index],
@@ -56,6 +58,7 @@ export const mapAiResponse = (
     const colors = getRandomPastelColors(response.data.length);
     const pieChartOutput: PieChartOutput = {
       id: nanoid(),
+      title,
       type: "pieChart",
       data: response.data.map((item, index) => ({
         id: item.category,

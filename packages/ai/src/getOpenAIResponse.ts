@@ -1,5 +1,4 @@
 import { openai } from "./openAi";
-import { generateClickhouseQuery } from "./promps/generateClickhouseQuery/generateClickhouseQuery.prompt";
 
 import { AiContext } from "./types";
 
@@ -12,7 +11,7 @@ export const getOpenAIResponse = async (
     messages: context.concat([
       {
         role: "user",
-        content: generateClickhouseQuery(prompt),
+        content: prompt,
       },
     ]),
   });

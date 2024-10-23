@@ -1,5 +1,5 @@
 import { expectedOutput, expectedSqlColumns } from "./output";
-import { stripeTableDDL } from "./stripe.context";
+import { stripeTableDDL } from "../__context__/stripe.context";
 
 //    Every question that is not related to this DDL will end up with the following preformatted answer: "${exclusionOutput}".
 

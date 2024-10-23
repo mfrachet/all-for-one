@@ -9,19 +9,37 @@ import { AiResponseEntry } from "../types";
 import { PieChart } from "../components/charts/PieChart/PieChart";
 import { BadgeDollarSign, ChartLine, ChartPie } from "lucide-react";
 import { SuggestionList } from "../modules/charts/components/SuggestionList";
+import { getSuggestions } from "../modules/charts/services/getSuggestions";
+import { Suggestion } from "../modules/charts/types";
 
 export const dashboardIndexLoader: LoaderFunction = async () => {
-  const charts = await getCharts();
+  const [charts, suggestions] = await Promise.all([
+    getCharts(),
+    getSuggestions(),
+  ]);
 
-  return { charts };
+  return { charts, suggestions };
 };
 
 export const DashboardIndex = () => {
-  const { charts } = useLoaderData() as { charts: Array<AiResponseEntry> };
+  const { charts, suggestions } = useLoaderData() as {
+    charts: Array<AiResponseEntry>;
+    suggestions: Array<Suggestion>;
+  };
+
+  console.log("lol", suggestions);
 
   const paragraphs = charts.filter((c) => c.type === "paragraph");
   const lineCharts = charts.filter((c) => c.type === "lineChart");
   const pieCharts = charts.filter((c) => c.type === "pieChart");
+
+  const suggestionParagraphs = suggestions.filter(
+    (s) => s.type === "paragraph"
+  );
+  const suggestionLineCharts = suggestions.filter(
+    (s) => s.type === "lineChart"
+  );
+  const suggestionPieCharts = suggestions.filter((s) => s.type === "pieChart");
 
   const chartGridCss = "grid grid-cols-3 gap-4 pt-4";
 
@@ -43,7 +61,7 @@ export const DashboardIndex = () => {
             </SectionHeader>
           }
         >
-          <SuggestionList suggestions={["All", "All", "All", "All"]} />
+          <SuggestionList suggestions={suggestionParagraphs} />
 
           <div className="flex flex-row gap-4">
             {paragraphs.map((p) => (
@@ -63,7 +81,7 @@ export const DashboardIndex = () => {
             </SectionHeader>
           }
         >
-          <SuggestionList suggestions={["All", "All", "All", "All"]} />
+          <SuggestionList suggestions={suggestionLineCharts} />
 
           <div className={chartGridCss}>
             {lineCharts.map((c) => (
@@ -85,7 +103,7 @@ export const DashboardIndex = () => {
             </SectionHeader>
           }
         >
-          <SuggestionList suggestions={["All", "All", "All", "All"]} />
+          <SuggestionList suggestions={suggestionPieCharts} />
 
           <div className={chartGridCss}>
             {pieCharts.map((c) => (

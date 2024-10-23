@@ -7,6 +7,7 @@ export type AiContext = Array<{
 export type LineChartOutput = {
   id: string;
   type: "lineChart";
+  title: string;
   data: Array<{
     id: string;
     color: string;
@@ -19,6 +20,7 @@ export type LineChartOutput = {
 
 export type ParagraphOutput = {
   id: string;
+  title: string;
   type: "paragraph";
   data: string;
 };
@@ -26,6 +28,7 @@ export type ParagraphOutput = {
 export type PieChartOutput = {
   id: string;
   type: "pieChart";
+  title: string;
   data: Array<{
     id: string;
     label: string;
@@ -45,5 +48,10 @@ export type PersistentChart = {
   id: string;
   title: string;
   sqlQuery: string;
+  type: "lineChart" | "pieChart" | "paragraph";
+};
+
+export type Suggestion = {
+  title: string;
   type: "lineChart" | "pieChart" | "paragraph";
 };

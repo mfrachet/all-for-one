@@ -1,8 +1,9 @@
 import { Tag } from "../../../components/Tag";
 import { useMessages } from "../../conversation/context/useMessages";
+import { Suggestion } from "../types";
 
 export interface SuggestionListProps {
-  suggestions: string[];
+  suggestions: Suggestion[];
 }
 
 export const SuggestionList = ({ suggestions }: SuggestionListProps) => {
@@ -13,8 +14,11 @@ export const SuggestionList = ({ suggestions }: SuggestionListProps) => {
       <h3 className="text-xs text-gray-500 pb-2">Suggestions</h3>
       <div className="flex flex-row gap-2 flex-wrap">
         {suggestions.map((suggestion) => (
-          <Tag key={suggestion} onClick={() => addMessage(suggestion)}>
-            {suggestion}
+          <Tag
+            key={suggestion.title}
+            onClick={() => addMessage(suggestion.title)}
+          >
+            {suggestion.title}
           </Tag>
         ))}
       </div>
