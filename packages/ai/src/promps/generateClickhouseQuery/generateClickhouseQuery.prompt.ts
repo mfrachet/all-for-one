@@ -1,10 +1,10 @@
 import { expectedOutput, expectedSqlColumns } from "./output";
-import { stripeTableDDL } from "../__context__/stripe.context";
+import { tables } from "./clickhouse.context";
 
 //    Every question that is not related to this DDL will end up with the following preformatted answer: "${exclusionOutput}".
 
 export const generateClickhouseQuery = (input: string) => `
-    Your scope is limited to the DDL passed in this context: "${stripeTableDDL}".
+    Your scope is limited to the DDL passed in this context: "${tables}".
     You will generate a JSON of type "ExpectedSqlOutput" from the following type definition: "${expectedOutput}", nothing else is authorized.
     The JSON should be strict and valid, not containing any escaping characters, new lines, markdown or code blocks.
     The sql query should provide columns matching the next criteria: ${expectedSqlColumns}.
