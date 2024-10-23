@@ -26,7 +26,7 @@ export const DashboardRoot = () => {
   return (
     <main className="grid grid-cols-[auto_1fr] h-full">
       <CollapsibleSide
-        className="h-full border-r border-gray-200 bg-gray-50 relative"
+        className="h-full border-r border-gray-100 relative bg-white"
         widthClass=" w-64"
         icon={(open) => (open ? <ChevronLeftIcon /> : <Menu />)}
         iconSide="right"
@@ -42,13 +42,13 @@ export const DashboardRoot = () => {
       </CollapsibleSide>
 
       <Container>
-        <div className="py-4 pl-12 pr-24">
+        <div className="py-4 pl-12 pr-24 bg-gray-50 h-full">
           <Outlet />
         </div>
       </Container>
 
       <CollapsibleSide
-        className="overflow-hidden border-l border-gray-200 h-full px-4 py-4 fixed right-0 top-0 bottom-0 bg-gray-50"
+        className="overflow-hidden border-l border-gray-100 h-full px-4 py-4 fixed right-0 top-0 bottom-0 bg-white"
         widthClass="w-[500px]"
         icon={(open) =>
           open ? (

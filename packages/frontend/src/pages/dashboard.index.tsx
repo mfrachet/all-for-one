@@ -7,6 +7,7 @@ import { getCharts } from "../modules/charts/services/getCharts";
 import { LoaderFunction, useLoaderData } from "react-router-dom";
 import { AiResponseEntry } from "../types";
 import { PieChart } from "../components/charts/PieChart/PieChart";
+import { BadgeDollarSign, ChartLine, ChartPie } from "lucide-react";
 
 export const dashboardIndexLoader: LoaderFunction = async () => {
   const charts = await getCharts();
@@ -31,6 +32,7 @@ export const DashboardIndex = () => {
         <Section
           title={
             <SectionHeader
+              icon={<BadgeDollarSign />}
               as="h3"
               description="Here you can see the most important numbers for you."
             >
@@ -50,6 +52,7 @@ export const DashboardIndex = () => {
             <SectionHeader
               as="h3"
               description="Here you can see the evolution of your trends."
+              icon={<ChartLine />}
             >
               The evolution of your trends
             </SectionHeader>
@@ -69,6 +72,7 @@ export const DashboardIndex = () => {
             <SectionHeader
               as="h3"
               description="Here you can see the repartition of your needs."
+              icon={<ChartPie />}
             >
               The repartition of your needs
             </SectionHeader>

@@ -33,7 +33,7 @@ export const QuestionInput = ({
     >
       <label className="sr-only">Search for something</label>
       <textarea
-        className="w-full px-4 py-2 text-lg rounded-3xl bg-gray-100 resize-none flex pr-16"
+        className="w-full px-4 py-2 text-lg rounded-3xl bg-gray-50 resize-none flex pr-16"
         minLength={0}
         name="question"
         placeholder="Ask a question about your data"

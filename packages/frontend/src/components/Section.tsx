@@ -1,3 +1,5 @@
+import { ReactNode } from "react";
+
 export interface SectionProps {
   children: React.ReactNode;
   title: React.ReactNode;
@@ -16,22 +18,23 @@ export interface SectionHeaderProps {
   children: React.ReactNode;
   as?: "h2" | "h3";
   description?: React.ReactNode;
+  icon?: ReactNode;
 }
 
 export const SectionHeader = ({
   children,
   as: Tag = "h2",
   description,
+  icon,
 }: SectionHeaderProps) => {
-  if (description) {
-    return (
+  return (
+    <div className="flex flex-row gap-2">
+      {icon && <div className="[&>svg]:w-4 [&>svg]:h-4 pt-1">{icon}</div>}
       <div>
         <Tag className="text font-semibold text-gray-800">{children}</Tag>
 
-        <p className="text-sm text-gray-500">{description}</p>
+        {description && <p className="text-sm text-gray-500">{description}</p>}
       </div>
-    );
-  }
-
-  return <Tag className="text font-semibold text-gray-800">{children}</Tag>;
+    </div>
+  );
 };
