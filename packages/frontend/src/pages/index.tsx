@@ -25,7 +25,7 @@ export const DashboardIndex = () => {
   );
   const suggestionPieCharts = suggestions.filter((s) => s.type === "pieChart");
 
-  const chartGridCss = "grid grid-cols-3 gap-4 pt-4";
+  const chartGridCss = "grid grid-cols-3 gap-4 pb-4";
 
   return (
     <>
@@ -45,18 +45,20 @@ export const DashboardIndex = () => {
             </SectionHeader>
           }
         >
-          <SuggestionList suggestions={suggestionParagraphs} />
+          {paragraphs.length > 0 && (
+            <div className="flex flex-row gap-4 pb-4">
+              {paragraphs.map((p) => (
+                <BigStat
+                  key={p.id}
+                  title={p.title}
+                  value={p.data}
+                  color={p.color}
+                />
+              ))}
+            </div>
+          )}
 
-          <div className="flex flex-row gap-4 pt-4">
-            {paragraphs.map((p) => (
-              <BigStat
-                key={p.id}
-                title={p.title}
-                value={p.data}
-                color={p.color}
-              />
-            ))}
-          </div>
+          <SuggestionList suggestions={suggestionParagraphs} />
         </Section>
 
         <Section
@@ -70,15 +72,17 @@ export const DashboardIndex = () => {
             </SectionHeader>
           }
         >
-          <SuggestionList suggestions={suggestionLineCharts} />
+          {lineCharts.length > 0 && (
+            <div className={chartGridCss}>
+              {lineCharts.map((c) => (
+                <ChartCard key={c.id} title={c.title}>
+                  <LineChart data={c.data} />
+                </ChartCard>
+              ))}
+            </div>
+          )}
 
-          <div className={chartGridCss}>
-            {lineCharts.map((c) => (
-              <ChartCard key={c.id} title={c.title}>
-                <LineChart data={c.data} />
-              </ChartCard>
-            ))}
-          </div>
+          <SuggestionList suggestions={suggestionLineCharts} />
         </Section>
 
         <Section
@@ -92,15 +96,17 @@ export const DashboardIndex = () => {
             </SectionHeader>
           }
         >
-          <SuggestionList suggestions={suggestionPieCharts} />
+          {pieCharts.length > 0 && (
+            <div className={chartGridCss}>
+              {pieCharts.map((c) => (
+                <ChartCard key={c.id} title={c.title}>
+                  <PieChart data={c.data} />
+                </ChartCard>
+              ))}
+            </div>
+          )}
 
-          <div className={chartGridCss}>
-            {pieCharts.map((c) => (
-              <ChartCard key={c.id} title={c.title}>
-                <PieChart data={c.data} />
-              </ChartCard>
-            ))}
-          </div>
+          <SuggestionList suggestions={suggestionPieCharts} />
         </Section>
       </div>
     </>
