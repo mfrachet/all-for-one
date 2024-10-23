@@ -35,7 +35,13 @@ export const CollapsibleSide = ({
         </span>
       </button>
 
-      <div className={`h-full ${open ? "" : "hidden"}`}>{children}</div>
+      <div
+        className={`h-full ${
+          open ? "animate-fadeIn animation-delay-100" : "hidden"
+        }`}
+      >
+        {children}
+      </div>
     </div>
   );
 };
