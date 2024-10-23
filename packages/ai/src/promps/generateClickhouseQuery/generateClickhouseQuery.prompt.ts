@@ -1,5 +1,5 @@
 import { expectedOutput, expectedSqlColumns } from "./output";
-import { tables } from "./clickhouse.context";
+import { tables } from "../__context__/clickhouse.context";
 
 //    Every question that is not related to this DDL will end up with the following preformatted answer: "${exclusionOutput}".
 
