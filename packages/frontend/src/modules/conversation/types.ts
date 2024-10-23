@@ -1,5 +1,6 @@
 type LineChartOutput = {
   id: string;
+  title: string;
   type: "lineChart";
   data: Array<{
     id: string;
@@ -13,12 +14,14 @@ type LineChartOutput = {
 
 type ParagraphOutput = {
   id: string;
+  title: string;
   type: "paragraph";
   data: string;
 };
 
 type PieChartOutput = {
   id: string;
+  title: string;
   type: "pieChart";
   data: Array<{
     id: string;

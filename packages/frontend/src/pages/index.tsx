@@ -27,8 +27,6 @@ export const DashboardIndex = () => {
     suggestions: Array<Suggestion>;
   };
 
-  console.log("lol", suggestions);
-
   const paragraphs = charts.filter((c) => c.type === "paragraph");
   const lineCharts = charts.filter((c) => c.type === "lineChart");
   const pieCharts = charts.filter((c) => c.type === "pieChart");
@@ -65,7 +63,7 @@ export const DashboardIndex = () => {
 
           <div className="flex flex-row gap-4">
             {paragraphs.map((p) => (
-              <BigStat key={p.id} title="title" value={p.data} color="red" />
+              <BigStat key={p.id} title={p.title} value={p.data} color="red" />
             ))}
           </div>
         </Section>
@@ -85,7 +83,7 @@ export const DashboardIndex = () => {
 
           <div className={chartGridCss}>
             {lineCharts.map((c) => (
-              <ChartCard key={c.id} title={"Evolutin of the trends"}>
+              <ChartCard key={c.id} title={c.title}>
                 <LineChart data={c.data} />
               </ChartCard>
             ))}
@@ -107,7 +105,7 @@ export const DashboardIndex = () => {
 
           <div className={chartGridCss}>
             {pieCharts.map((c) => (
-              <ChartCard key={c.id} title={"Evolutin of the trends"}>
+              <ChartCard key={c.id} title={c.title}>
                 <PieChart data={c.data} />
               </ChartCard>
             ))}
