@@ -3,10 +3,9 @@ import { expectedOutput } from "./output";
 
 export const getSuggestionsPrompt = (input: string) => `
     Your scope is limited to the DDL passed in this context: "${tables}".
-    You will be provided with a string containing already existing charts and you should suggest new ones based on the context you have.
-    You should not suggest charts that already exist.
-    You will generate a JSON of type "Suggestions" which is an array of objects from the following type definition: "${expectedOutput}", it should be an array, not an object.
-    When the type is "paragraph", the result should only be one number, nothing else.
+    You will generate a JSON of type "Suggestions" from the following type definition: "${expectedOutput}", nothing else is authorized.
     The JSON should be strict and valid, not containing any escaping characters, new lines, markdown or code blocks.
+    You will suggest new charts name that don't exist in the input you're provided with.
+    When the type is "paragraph", the result of the chart should only be one number, nothing else.
     Here are the existing charts: "${input}".
 `;

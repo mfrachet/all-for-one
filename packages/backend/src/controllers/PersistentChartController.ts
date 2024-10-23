@@ -47,8 +47,17 @@ export class PersistentChartController {
     );
 
     const response = await getOpenAIResponse(
-      getSuggestionsPrompt(alreadyExistingCharts.join(", ")),
+      getSuggestionsPrompt(
+        alreadyExistingCharts.map((chart) => chart.title).join(", ")
+      ),
       []
+    );
+
+    console.log(
+      "xx",
+      getSuggestionsPrompt(
+        alreadyExistingCharts.map((chart) => chart.title).join(", ")
+      )
     );
 
     return JSON.parse(response || "[]");
