@@ -26,6 +26,21 @@ export const rootLoader: LoaderFunction = async () => {
   }
 };
 
+const EmptyConversation = () => {
+  return (
+    <div className="h-full flex justify-center items-center">
+      <div className="text-gray-400 rounded-3xl p-8">
+        <div
+          className="text-xl font-bold py-4 text-center animate-fadeIn opacity-0"
+          style={{ animationDelay: "0.5s" }}
+        >
+          Ask me anything about your data.
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export const DashboardRoot = () => {
   return (
     <main className="grid grid-cols-[auto_1fr] h-full">
@@ -61,7 +76,7 @@ export const DashboardRoot = () => {
         }
       >
         <div className="pt-12 h-full">
-          <AiFeed id="1" />
+          <AiFeed id="1" emptyState={<EmptyConversation />} />
         </div>
       </CollapsibleSide>
     </main>
