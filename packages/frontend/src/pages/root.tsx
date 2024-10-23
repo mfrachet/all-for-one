@@ -1,4 +1,9 @@
-import { LoaderFunction, Outlet, redirect } from "react-router-dom";
+import {
+  LoaderFunction,
+  Outlet,
+  redirect,
+  useLoaderData,
+} from "react-router-dom";
 import { Navbar, NavItem } from "../components/Navbar";
 import { AiFeed } from "../modules/conversation/components/AiFeed";
 import { CollapsibleSide } from "../components/CollapsibleSide";
@@ -13,6 +18,11 @@ import { getMe } from "../modules/user/services/getMe";
 import { getCharts } from "../modules/charts/services/getCharts";
 import { nanoid } from "nanoid";
 import { MessageProvider } from "../modules/conversation/context/MessageProvider";
+import { SuggestionsProvider } from "../modules/charts/contexts/SuggestionsProvider";
+import { getSuggestions } from "../modules/charts/services/getSuggestions";
+import { ChartsProvider } from "../modules/charts/contexts/ChartsProvider";
+import { Suggestion } from "../modules/charts/types";
+import { AiResponseEntry } from "../types";
 
 export const rootLoader: LoaderFunction = async () => {
   try {
@@ -21,7 +31,9 @@ export const rootLoader: LoaderFunction = async () => {
 
     if (charts.length === 0) return redirect(`/c/${nanoid()}`);
 
-    return null;
+    const suggestions = await getSuggestions();
+
+    return { charts, suggestions };
   } catch {
     return redirect("/login");
   }
@@ -41,47 +53,55 @@ const EmptyConversation = () => {
     </div>
   );
 };
-
 export const DashboardRoot = () => {
+  const { charts, suggestions } = useLoaderData() as {
+    charts: AiResponseEntry[];
+    suggestions: Suggestion[];
+  };
+
   return (
     <MessageProvider conversationId="1">
-      <main className="grid grid-cols-[auto_1fr] h-full">
-        <CollapsibleSide
-          className="h-full border-r border-gray-100 relative bg-white"
-          widthClass=" w-64"
-          icon={(open) => (open ? <ChevronLeftIcon /> : <Menu />)}
-          iconSide="right"
-          initialOpen={false}
-        >
-          <div className="pt-5">
-            <Navbar>
-              <NavItem to="/dashboard" icon={<HomeIcon />}>
-                Dashboard
-              </NavItem>
-            </Navbar>
-          </div>
-        </CollapsibleSide>
+      <ChartsProvider charts={charts}>
+        <SuggestionsProvider suggestions={suggestions}>
+          <main className="grid grid-cols-[auto_1fr] h-full">
+            <CollapsibleSide
+              className="h-full border-r border-gray-100 relative bg-white"
+              widthClass=" w-64"
+              icon={(open) => (open ? <ChevronLeftIcon /> : <Menu />)}
+              iconSide="right"
+              initialOpen={false}
+            >
+              <div className="pt-5">
+                <Navbar>
+                  <NavItem to="/dashboard" icon={<HomeIcon />}>
+                    Dashboard
+                  </NavItem>
+                </Navbar>
+              </div>
+            </CollapsibleSide>
 
-        <div className="pt-4 pb-20 pl-12 pr-24 bg-gray-50 h-full">
-          <Outlet />
-        </div>
+            <div className="pt-4 pb-20 pl-12 pr-24 bg-gray-50 h-full">
+              <Outlet />
+            </div>
 
-        <CollapsibleSide
-          className="overflow-hidden border-l border-gray-100 h-full px-4 py-4 fixed right-0 top-0 bottom-0 bg-white"
-          widthClass="w-4/12"
-          icon={(open) =>
-            open ? (
-              <ChevronRightIcon />
-            ) : (
-              <MessageCircle className="text-emerald-500" />
-            )
-          }
-        >
-          <div className="pt-12 h-full">
-            <AiFeed emptyState={<EmptyConversation />} />
-          </div>
-        </CollapsibleSide>
-      </main>
+            <CollapsibleSide
+              className="overflow-hidden border-l border-gray-100 h-full px-4 py-4 fixed right-0 top-0 bottom-0 bg-white"
+              widthClass="w-4/12"
+              icon={(open) =>
+                open ? (
+                  <ChevronRightIcon />
+                ) : (
+                  <MessageCircle className="text-emerald-500" />
+                )
+              }
+            >
+              <div className="pt-12 h-full">
+                <AiFeed emptyState={<EmptyConversation />} />
+              </div>
+            </CollapsibleSide>
+          </main>
+        </SuggestionsProvider>
+      </ChartsProvider>
     </MessageProvider>
   );
 };

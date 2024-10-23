@@ -3,29 +3,15 @@ import { Title } from "../components/Title";
 import { BigStat } from "../components/BigStat";
 import { LineChart } from "../components/charts/LineChart/LineChart";
 import { ChartCard } from "../components/ChartCard";
-import { getCharts } from "../modules/charts/services/getCharts";
-import { LoaderFunction, useLoaderData } from "react-router-dom";
-import { AiResponseEntry } from "../types";
 import { PieChart } from "../components/charts/PieChart/PieChart";
 import { BadgeDollarSign, ChartLine, ChartPie } from "lucide-react";
 import { SuggestionList } from "../modules/charts/components/SuggestionList";
-import { getSuggestions } from "../modules/charts/services/getSuggestions";
-import { Suggestion } from "../modules/charts/types";
-
-export const dashboardIndexLoader: LoaderFunction = async () => {
-  const [charts, suggestions] = await Promise.all([
-    getCharts(),
-    getSuggestions(),
-  ]);
-
-  return { charts, suggestions };
-};
+import { useCharts } from "../modules/charts/contexts/useCharts";
+import { useSuggestions } from "../modules/charts/contexts/useSuggestions";
 
 export const DashboardIndex = () => {
-  const { charts, suggestions } = useLoaderData() as {
-    charts: Array<AiResponseEntry>;
-    suggestions: Array<Suggestion>;
-  };
+  const charts = useCharts();
+  const suggestions = useSuggestions();
 
   const paragraphs = charts.filter((c) => c.type === "paragraph");
   const lineCharts = charts.filter((c) => c.type === "lineChart");

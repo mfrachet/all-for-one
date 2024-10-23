@@ -8,7 +8,7 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { ConversationsId } from "./pages/conversations.$id";
 import { queryClient } from "./modules/misc/queryClient";
 import { DashboardRoot, rootLoader } from "./pages/root";
-import { DashboardIndex, dashboardIndexLoader } from "./pages";
+import { DashboardIndex } from "./pages";
 import { LoginPage } from "./pages/login";
 import { saveChartAction } from "./actions/saveChartAction";
 
@@ -21,7 +21,6 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        loader: dashboardIndexLoader,
         element: <DashboardIndex />,
       },
     ],
