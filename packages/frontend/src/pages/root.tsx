@@ -66,7 +66,7 @@ export const DashboardRoot = () => {
 
       <CollapsibleSide
         className="overflow-hidden border-l border-gray-100 h-full px-4 py-4 fixed right-0 top-0 bottom-0 bg-white"
-        widthClass="w-[500px]"
+        widthClass="w-4/12"
         icon={(open) =>
           open ? (
             <ChevronRightIcon />
