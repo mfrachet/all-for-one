@@ -8,7 +8,7 @@ export const LoginPage = () => {
   const handleClick = () => {
     localStorage.setItem("jwt", nanoid());
 
-    navigate("/dashboard");
+    navigate("/");
   };
 
   return (

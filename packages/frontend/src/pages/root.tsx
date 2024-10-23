@@ -1,7 +1,6 @@
 import { LoaderFunction, Outlet, redirect } from "react-router-dom";
 import { Navbar, NavItem } from "../components/Navbar";
 import { AiFeed } from "../modules/conversation/components/AiFeed";
-import { Container } from "../components/Container";
 import { CollapsibleSide } from "../components/CollapsibleSide";
 import {
   ChevronLeftIcon,
@@ -11,12 +10,17 @@ import {
   MessageCircle,
 } from "lucide-react";
 import { getMe } from "../modules/user/services/getMe";
+import { getCharts } from "../modules/charts/services/getCharts";
+import { nanoid } from "nanoid";
 
 export const rootLoader: LoaderFunction = async () => {
   try {
-    const user = await getMe();
+    await getMe();
+    const charts = await getCharts();
 
-    return { user };
+    if (charts.length === 0) return redirect(`/c/${nanoid()}`);
+
+    return null;
   } catch {
     return redirect("/login");
   }
@@ -41,11 +45,9 @@ export const DashboardRoot = () => {
         </div>
       </CollapsibleSide>
 
-      <Container>
-        <div className="py-4 pl-12 pr-24 bg-gray-50 h-full">
-          <Outlet />
-        </div>
-      </Container>
+      <div className="py-4 pl-12 pr-24 bg-gray-50 h-full">
+        <Outlet />
+      </div>
 
       <CollapsibleSide
         className="overflow-hidden border-l border-gray-100 h-full px-4 py-4 fixed right-0 top-0 bottom-0 bg-white"

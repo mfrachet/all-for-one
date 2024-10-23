@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { Container } from "../../../components/Container";
 import { Message } from "../../../components/Message";
 import { MessageFactory } from "../../../components/MessageFactory";
 import { QuestionInput } from "../../../components/QuestionInput";
@@ -11,9 +10,10 @@ import { nanoid } from "nanoid";
 
 export interface AiFeedProps {
   id: string;
+  emptyState?: React.ReactNode;
 }
 
-export const AiFeed = ({ id }: AiFeedProps) => {
+export const AiFeed = ({ id, emptyState }: AiFeedProps) => {
   const [messages, setMessages] = useState<Array<AiResponseEntry>>([]);
   const containerRef = useScrollDown([messages]);
 
@@ -28,33 +28,31 @@ export const AiFeed = ({ id }: AiFeedProps) => {
   return (
     <div className="h-full flex flex-col">
       <div className="flex-1 overflow-y-scroll" ref={containerRef}>
-        <Container>
-          <ol className="flex flex-col gap-4">
-            {messages.map((message) => (
-              <li key={message.id} className="block w-full">
-                <MessageFactory message={message} />
-              </li>
-            ))}
-          </ol>
+        {messages.length === 0 && emptyState}
 
-          {mutation.isPending && (
-            <Message isResponse>
-              <Spinner />
-            </Message>
-          )}
-        </Container>
+        <ol className="flex flex-col gap-4">
+          {messages.map((message) => (
+            <li key={message.id} className="block w-full">
+              <MessageFactory message={message} />
+            </li>
+          ))}
+        </ol>
+
+        {mutation.isPending && (
+          <Message isResponse>
+            <Spinner />
+          </Message>
+        )}
       </div>
 
-      <Container>
-        <QuestionInput
-          onSubmit={(str: string) => {
-            setMessages((s) =>
-              s.concat([{ type: "paragraph", data: str, id: nanoid() }])
-            );
-            mutation.mutate(str);
-          }}
-        />
-      </Container>
+      <QuestionInput
+        onSubmit={(str: string) => {
+          setMessages((s) =>
+            s.concat([{ type: "paragraph", data: str, id: nanoid() }])
+          );
+          mutation.mutate(str);
+        }}
+      />
     </div>
   );
 };

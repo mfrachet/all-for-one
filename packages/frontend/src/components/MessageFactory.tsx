@@ -4,20 +4,37 @@ import { ChartWrapper } from "./ChartWrapper";
 import { Form } from "react-router-dom";
 import { ChartFactory } from "./ChartFactory";
 import React from "react";
+import { Pin } from "lucide-react";
 
 export const MessageFactory = ({ message }: { message: AiResponseEntry }) => {
   const Wrapper = message.type === "paragraph" ? React.Fragment : ChartWrapper;
-  return (
-    <Message isResponse={message.isResponse}>
-      <Form method="post" action="/dashboard">
-        <input type="hidden" name="chartId" value={message.id} />
 
-        <Wrapper>
-          <ChartFactory chart={message} />
-        </Wrapper>
+  const btnClass = "p-2 rounded-xl hover:bg-gray-100 active:bg-gray-200";
 
-        <button type="submit">Pin</button>
-      </Form>
-    </Message>
-  );
+  if (message.isResponse) {
+    return (
+      <Message isResponse={true}>
+        <Form method="post" action="/" className="relative">
+          <input type="hidden" name="chartId" value={message.id} />
+
+          <Wrapper>
+            <ChartFactory chart={message} />
+          </Wrapper>
+
+          <button
+            type="submit"
+            className={`absolute right-4 top-4 ${btnClass}`}
+          >
+            <Pin className="w-4 h-4 text-gray-500" />
+          </button>
+        </Form>
+      </Message>
+    );
+  }
+
+  if (message.type === "paragraph") {
+    return <Message isResponse={false}>{message.data}</Message>;
+  }
+
+  return null;
 };
