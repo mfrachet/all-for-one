@@ -7,6 +7,7 @@ import { CachingService } from "./services/CachingService";
 import { ComputeService } from "./services/ComputeService";
 import { PersistentChartService } from "./services/PersistentChartService";
 import { PersistentChartController } from "./controllers/PersistentChartController";
+import { ConversationService } from "./services/ConversationService";
 
 const app = express();
 
@@ -17,7 +18,12 @@ const cacheService = new CachingService();
 const persistentChartService = new PersistentChartService(cacheService);
 
 const computeService = new ComputeService();
-const computeController = new ComputeController(computeService, cacheService);
+const conversationService = new ConversationService(cacheService);
+const computeController = new ComputeController(
+  computeService,
+  cacheService,
+  conversationService
+);
 const persistentChartController = new PersistentChartController(
   persistentChartService,
   computeService
@@ -59,6 +65,15 @@ app.get("/charts/suggestions", async (req, res) => {
   const suggestions = await persistentChartController.getSuggestions();
 
   res.status(200).send(suggestions);
+});
+
+app.get("/conversations/:id", async (req, res) => {
+  const conversationId = req.params.id;
+  const conversation = await conversationService.getOrCreateConversation(
+    conversationId
+  );
+
+  res.status(200).send(conversation);
 });
 
 app.listen(3000, () => {

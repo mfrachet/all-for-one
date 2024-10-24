@@ -6,10 +6,12 @@ import { AiContext, ExpectedOutput, PersistentChart } from "../types";
 
 import { ComputeService } from "../services/ComputeService";
 import { nanoid } from "nanoid";
+import { ConversationService } from "../services/ConversationService";
 export class ComputeController {
   constructor(
     private computeService: ComputeService,
-    private cacheService: CachingService
+    private cacheService: CachingService,
+    private conversationService: ConversationService
   ) {}
 
   async _getCachedContext(conversationId: string) {
@@ -49,16 +51,23 @@ export class ComputeController {
         sqlQuery: responseObj.sqlQuery,
       };
 
-      const formattedResponse = await this.computeService.execute(
-        persistentChart
-      );
+      const chartsResponse = await this.computeService.execute(persistentChart);
 
       await this.cacheService.set(
         `chart:${persistentChart.id}`,
         persistentChart
       );
 
-      return formattedResponse;
+      await this.conversationService.createUserMessage(conversationId, input);
+
+      for (const chartResponse of chartsResponse) {
+        await this.conversationService.appendEntry(
+          conversationId,
+          chartResponse
+        );
+      }
+
+      return chartsResponse;
     } catch (e) {
       console.error("[Compute] error", e);
       return null;

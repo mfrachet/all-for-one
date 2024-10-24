@@ -22,7 +22,16 @@ export const MessageProvider = ({
 
   const addMessage = (message: string) => {
     setMessages((s) =>
-      s.concat([{ type: "paragraph", data: message, id: nanoid() }])
+      s.concat([
+        {
+          type: "paragraph",
+          data: message,
+          id: nanoid(),
+          color: "black",
+          title: "",
+          isResponse: false,
+        },
+      ])
     );
 
     mutation.mutate({ conversationId, input: message });
