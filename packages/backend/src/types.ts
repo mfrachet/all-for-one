@@ -38,10 +38,22 @@ export type PieChartOutput = {
   }>;
 };
 
+export type MapChartOutput = {
+  id: string;
+  type: "mapChart";
+  title: string;
+  data: Array<{
+    id: string;
+    value: number;
+    color: string;
+  }>;
+};
+
 export type FormattedResponse =
   | LineChartOutput
   | ParagraphOutput
-  | PieChartOutput;
+  | PieChartOutput
+  | MapChartOutput;
 
 export type ExpectedOutput = FormattedResponse[];
 
@@ -49,12 +61,12 @@ export type PersistentChart = {
   id: string;
   title: string;
   sqlQuery: string;
-  type: "lineChart" | "pieChart" | "paragraph";
+  type: "lineChart" | "pieChart" | "paragraph" | "mapChart";
 };
 
 export type Suggestion = {
   title: string;
-  type: "lineChart" | "pieChart" | "paragraph";
+  type: "lineChart" | "pieChart" | "paragraph" | "mapChart";
 };
 
 export type ConversationEntry = FormattedResponse & { isResponse?: boolean };

@@ -6,6 +6,7 @@ import {
   ParagraphOutput,
   LineChartOutput,
   PieChartOutput,
+  MapChartOutput,
 } from "../types";
 
 export const mapAiResponse = (
@@ -66,6 +67,21 @@ export const mapAiResponse = (
       })),
     };
     return [pieChartOutput];
+  }
+
+  if (response.type === "mapChart") {
+    const mapChartOutput: MapChartOutput = {
+      id: chart.id,
+      title: chart.title,
+      type: "mapChart",
+      data: response.data.map((item) => ({
+        id: item.id,
+        value: Number(item.value),
+        color: getPastelColor(item.id),
+      })),
+    };
+
+    return [mapChartOutput];
   }
 
   return [];

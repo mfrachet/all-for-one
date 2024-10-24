@@ -34,10 +34,22 @@ type PieChartOutput = {
   }>;
 };
 
+export type MapChartOutput = {
+  id: string;
+  type: "mapChart";
+  title: string;
+  data: Array<{
+    id: string;
+    value: number;
+    color: string;
+  }>;
+};
+
 export type ConversationResponse =
   | LineChartOutput
   | ParagraphOutput
-  | PieChartOutput;
+  | PieChartOutput
+  | MapChartOutput;
 
 export type Conversation = {
   id: string;
