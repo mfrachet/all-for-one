@@ -1,14 +1,12 @@
 import {
   ActionFunction,
-  Link,
   LoaderFunction,
   redirect,
   useLoaderData,
 } from "react-router-dom";
 import { AiFeed } from "../modules/conversation/components/AiFeed";
-import { Button } from "../components/Button";
-import { ChartSpline, SquarePen } from "lucide-react";
-import { nanoid } from "nanoid";
+
+import { ChartSpline } from "lucide-react";
 import { Logo } from "../components/Logo";
 import { MessageProvider } from "../modules/conversation/context/MessageProvider";
 import { getConversation } from "../modules/conversation/services/getConversation";
@@ -71,9 +69,6 @@ export const ConversationsId = () => {
         <main className="h-full py-4 pt-20 max-w-4xl mx-auto relative">
           <div className="absolute top-4 right-4 flex flex-row justify-between gap-2 w-full items-center">
             <Logo />
-            <Button as={Link} to={`/c/${nanoid()}`} icon={<SquarePen />}>
-              Start over
-            </Button>
           </div>
 
           <AiFeed key={conversation.id} emptyState={<EmptyConversation />} />
