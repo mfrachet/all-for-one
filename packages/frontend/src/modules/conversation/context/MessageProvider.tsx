@@ -4,6 +4,7 @@ import { AiResponseEntry } from "../../../types";
 import { nanoid } from "nanoid";
 import { useSendConversationMessage } from "../hooks/useSendConversationMessage";
 import { Conversation } from "../types";
+import { useSuggestions } from "../../charts/contexts/useSuggestions";
 
 interface MessageProviderProps {
   conversation: Conversation;
@@ -14,12 +15,14 @@ export const MessageProvider = ({
   children,
   conversation,
 }: MessageProviderProps) => {
+  const suggestions = useSuggestions();
   const [messages, setMessages] = useState<Array<AiResponseEntry>>(
     conversation.messages
   );
 
   const mutation = useSendConversationMessage((response) => {
     if ("error" in response) return;
+    suggestions.refetch();
 
     setMessages((s) =>
       s.concat(response.map((r) => ({ ...r, isResponse: true })))

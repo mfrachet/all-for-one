@@ -11,8 +11,9 @@ export const SuggestionsProvider = ({ children }: SuggestionsProviderProps) => {
   return (
     <SuggestionsContext.Provider
       value={{
+        refetch: suggestionsQuery.refetch,
         suggestions: suggestionsQuery.data ?? [],
-        isLoading: suggestionsQuery.isPending,
+        isLoading: suggestionsQuery.isFetching,
       }}
     >
       {children}

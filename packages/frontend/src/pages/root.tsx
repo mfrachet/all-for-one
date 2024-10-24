@@ -69,10 +69,10 @@ export const DashboardRoot = () => {
   };
 
   return (
-    <MessageProvider conversation={conversation}>
-      <ChartsProvider charts={charts}>
-        <SideNavProvider onOpenChange={setRightSideOpen}>
-          <SuggestionsProvider>
+    <SuggestionsProvider>
+      <MessageProvider conversation={conversation}>
+        <ChartsProvider charts={charts}>
+          <SideNavProvider onOpenChange={setRightSideOpen}>
             <main className="grid grid-cols-[auto_1fr] h-full">
               <CollapsibleSide
                 className="h-full border-r border-gray-100 relative bg-white"
@@ -113,9 +113,9 @@ export const DashboardRoot = () => {
                 </div>
               </CollapsibleSide>
             </main>
-          </SuggestionsProvider>
-        </SideNavProvider>
-      </ChartsProvider>
-    </MessageProvider>
+          </SideNavProvider>
+        </ChartsProvider>
+      </MessageProvider>
+    </SuggestionsProvider>
   );
 };
