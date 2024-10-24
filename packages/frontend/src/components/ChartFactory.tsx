@@ -38,7 +38,14 @@ export const ChartFactory = ({ chart, action = "pin" }: ChartFactoryProps) => {
           </ChartCard>
         )}
         {chart.type === "paragraph" && (
-          <BigStat value={chart.data} title={chart.title} color={chart.color} />
+          <div>
+            {chart.id}
+            <BigStat
+              value={chart.data}
+              title={chart.title}
+              color={chart.color}
+            />
+          </div>
         )}
       </>
 

@@ -3,26 +3,25 @@ import {
   ExpectedOutput,
   LineChartOutput,
   ParagraphOutput,
+  PersistentChart,
   PieChartOutput,
 } from "../types";
 import { getRandomPastelColor, getRandomPastelColors } from "./pastelColors";
-import { nanoid } from "nanoid";
 
 export const mapAiResponse = (
-  type: SqlChartType,
-  title: string,
+  chart: PersistentChart,
   response: ExpectedSqlColumns
 ): ExpectedOutput => {
-  if (!type) {
+  if (!chart.type) {
     return [];
   }
 
   if (response.type === "paragraph") {
     const paragraphOutput: ParagraphOutput = {
-      id: nanoid(),
-      title,
+      id: chart.id,
+      title: chart.title,
       type: "paragraph",
-      color: getRandomPastelColor(title),
+      color: getRandomPastelColor(chart.title),
       data: response?.data[0]?.text ?? "No data found",
     };
     return [paragraphOutput];
@@ -30,8 +29,8 @@ export const mapAiResponse = (
 
   if (response.type === "lineChart") {
     const groupedByKey = response.data.reduce((acc, item) => {
-      acc[item.groupingKey ?? title] = [
-        ...(acc[item.groupingKey ?? title] || []),
+      acc[item.groupingKey ?? chart.title] = [
+        ...(acc[item.groupingKey ?? chart.title] || []),
         {
           x: item.x,
           y: item.y,
@@ -42,8 +41,8 @@ export const mapAiResponse = (
 
     const colors = getRandomPastelColors(Object.keys(groupedByKey).length);
     const lineChartOutput: LineChartOutput = {
-      id: nanoid(),
-      title,
+      id: chart.id,
+      title: chart.title,
       type: "lineChart",
       data: Object.entries(groupedByKey).map(([groupingKey, data], index) => ({
         color: colors[index],
@@ -58,8 +57,8 @@ export const mapAiResponse = (
   if (response.type === "pieChart") {
     const colors = getRandomPastelColors(response.data.length);
     const pieChartOutput: PieChartOutput = {
-      id: nanoid(),
-      title,
+      id: chart.id,
+      title: chart.title,
       type: "pieChart",
       data: response.data.map((item, index) => ({
         id: item.category,

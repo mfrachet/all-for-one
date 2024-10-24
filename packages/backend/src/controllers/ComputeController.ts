@@ -42,18 +42,16 @@ export class ComputeController {
       if (!responseObj.sqlQuery || !responseObj.type || !responseObj.title)
         return null;
 
-      const formattedResponse = await this.computeService.execute(
-        responseObj.type,
-        responseObj.title,
-        responseObj.sqlQuery
-      );
-
       const persistentChart: PersistentChart = {
-        id: formattedResponse[0].id,
+        id: nanoid(),
         type: responseObj.type,
         title: responseObj.title,
         sqlQuery: responseObj.sqlQuery,
       };
+
+      const formattedResponse = await this.computeService.execute(
+        persistentChart
+      );
 
       await this.cacheService.set(
         `chart:${persistentChart.id}`,

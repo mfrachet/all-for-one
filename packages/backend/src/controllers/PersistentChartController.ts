@@ -22,9 +22,7 @@ export class PersistentChartController {
     );
 
     const formattedResponses = await Promise.all(
-      chartsData.map((chart) =>
-        this.computeService.execute(chart!.type, chart!.title, chart!.sqlQuery)
-      )
+      chartsData.map((chart) => this.computeService.execute(chart))
     );
 
     return formattedResponses.flatMap((response) => response);
