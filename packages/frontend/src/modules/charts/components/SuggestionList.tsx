@@ -1,52 +1,44 @@
-import { Await } from "react-router-dom";
 import { Tag } from "../../../components/Tag";
 import { useMessages } from "../../conversation/context/useMessages";
-import { SuggestionDict } from "../types";
-import { Suspense } from "react";
+import { Suggestion } from "../types";
 import { Skeleton } from "../../../components/Skeleton";
 
 export interface SuggestionListProps {
-  suggestions: Promise<SuggestionDict>;
-  type: "paragraph" | "lineChart" | "pieChart";
+  suggestions: Array<Suggestion>;
+  isLoading: boolean;
 }
 
-export const SuggestionList = ({ suggestions, type }: SuggestionListProps) => {
+export const SuggestionList = ({
+  suggestions,
+  isLoading,
+}: SuggestionListProps) => {
   const { addMessage } = useMessages();
 
-  return (
-    <Suspense
-      fallback={
-        <div>
-          <h3 className="text-xs text-gray-500 pb-2">Suggestions</h3>
-          <div className="flex flex-row gap-2 items-center">
-            <Skeleton />
-            <Skeleton />
-            <Skeleton />
-          </div>
+  if (isLoading)
+    return (
+      <div>
+        <h3 className="text-xs text-gray-500 pb-2">Suggestions</h3>
+        <div className="flex flex-row gap-2 items-center">
+          <Skeleton />
+          <Skeleton />
+          <Skeleton />
         </div>
-      }
-    >
-      <Await resolve={suggestions}>
-        {(list: SuggestionDict) => {
-          if (list[type].length === 0) return null;
+      </div>
+    );
 
-          return (
-            <div>
-              <h3 className="text-xs text-gray-500 pb-2">Suggestions</h3>
-              <div className="flex flex-row gap-2 flex-wrap">
-                {list[type].map((suggestion) => (
-                  <Tag
-                    key={suggestion.title}
-                    onClick={() => addMessage(suggestion.title)}
-                  >
-                    {suggestion.title}
-                  </Tag>
-                ))}
-              </div>
-            </div>
-          );
-        }}
-      </Await>
-    </Suspense>
+  return (
+    <div>
+      <h3 className="text-xs text-gray-500 pb-2">Suggestions</h3>
+      <div className="flex flex-row gap-2 flex-wrap">
+        {suggestions.map((suggestion) => (
+          <Tag
+            key={suggestion.title}
+            onClick={() => addMessage(suggestion.title)}
+          >
+            {suggestion.title}
+          </Tag>
+        ))}
+      </div>
+    </div>
   );
 };

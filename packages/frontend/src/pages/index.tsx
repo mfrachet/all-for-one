@@ -8,7 +8,7 @@ import { ChartFactory } from "../components/ChartFactory";
 
 export const DashboardIndex = () => {
   const charts = useCharts();
-  const suggestionsPromise = useSuggestions();
+  const { suggestions, isLoading } = useSuggestions();
 
   const paragraphs = charts.filter((c) => c.type === "paragraph");
   const lineCharts = charts.filter((c) => c.type === "lineChart");
@@ -42,7 +42,12 @@ export const DashboardIndex = () => {
             </div>
           )}
 
-          <SuggestionList suggestions={suggestionsPromise} type="paragraph" />
+          <SuggestionList
+            isLoading={isLoading}
+            suggestions={suggestions.filter(
+              (suggestion) => suggestion.type === "paragraph"
+            )}
+          />
         </Section>
 
         <Section
@@ -64,7 +69,12 @@ export const DashboardIndex = () => {
             </div>
           )}
 
-          <SuggestionList suggestions={suggestionsPromise} type="lineChart" />
+          <SuggestionList
+            isLoading={isLoading}
+            suggestions={suggestions.filter(
+              (suggestion) => suggestion.type === "lineChart"
+            )}
+          />
         </Section>
 
         <Section
@@ -86,7 +96,12 @@ export const DashboardIndex = () => {
             </div>
           )}
 
-          <SuggestionList suggestions={suggestionsPromise} type="pieChart" />
+          <SuggestionList
+            isLoading={isLoading}
+            suggestions={suggestions.filter(
+              (suggestion) => suggestion.type === "pieChart"
+            )}
+          />
         </Section>
       </div>
     </>

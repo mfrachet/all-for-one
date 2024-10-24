@@ -1,5 +1,4 @@
 import {
-  defer,
   LoaderFunction,
   Outlet,
   redirect,
@@ -20,9 +19,7 @@ import { getCharts } from "../modules/charts/services/getCharts";
 import { nanoid } from "nanoid";
 import { MessageProvider } from "../modules/conversation/context/MessageProvider";
 import { SuggestionsProvider } from "../modules/charts/contexts/SuggestionsProvider";
-import { getSuggestions } from "../modules/charts/services/getSuggestions";
 import { ChartsProvider } from "../modules/charts/contexts/ChartsProvider";
-import { SuggestionDict } from "../modules/charts/types";
 import { AiResponseEntry } from "../types";
 
 export const rootLoader: LoaderFunction = async () => {
@@ -32,9 +29,7 @@ export const rootLoader: LoaderFunction = async () => {
 
     if (charts.length === 0) return redirect(`/c/${nanoid()}`);
 
-    const suggestionsPromise = getSuggestions();
-
-    return defer({ charts, suggestionsPromise });
+    return { charts };
   } catch {
     return redirect("/login");
   }
@@ -55,15 +50,14 @@ const EmptyConversation = () => {
   );
 };
 export const DashboardRoot = () => {
-  const { charts, suggestionsPromise } = useLoaderData() as {
+  const { charts } = useLoaderData() as {
     charts: AiResponseEntry[];
-    suggestionsPromise: Promise<SuggestionDict>;
   };
 
   return (
     <MessageProvider conversationId="1">
       <ChartsProvider charts={charts}>
-        <SuggestionsProvider suggestions={suggestionsPromise}>
+        <SuggestionsProvider>
           <main className="grid grid-cols-[auto_1fr] h-full">
             <CollapsibleSide
               className="h-full border-r border-gray-100 relative bg-white"
