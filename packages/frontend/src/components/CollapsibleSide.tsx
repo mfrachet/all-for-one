@@ -1,13 +1,11 @@
-import { useState } from "react";
-
 export interface CollapsibleSideProps {
   children: React.ReactNode;
-
   className?: string;
   widthClass: string;
-  icon: (open: boolean) => React.ReactNode;
+  icon: React.ReactNode;
   iconSide?: "left" | "right";
-  initialOpen?: boolean;
+  open?: boolean;
+  onOpenChange: (open: boolean) => void;
 }
 
 export const CollapsibleSide = ({
@@ -16,23 +14,20 @@ export const CollapsibleSide = ({
   widthClass,
   icon,
   iconSide = "left",
-  initialOpen = true,
+  open = true,
+  onOpenChange,
 }: CollapsibleSideProps) => {
-  const [open, setOpen] = useState(initialOpen);
-
   return (
     <div
       className={`transition-all ${className} ${open ? widthClass : "w-12"}`}
     >
       <button
-        onClick={() => setOpen((s) => !s)}
+        onClick={() => onOpenChange(!open)}
         className={`absolute top-4 p-2 rounded-xl hover:bg-gray-100 active:bg-gray-200 z-10 ${
           iconSide === "left" ? "left-2" : "right-2"
         }`}
       >
-        <span className="[&>svg]:w-4 [&>svg]:h-4 text-gray-500">
-          {icon(open)}
-        </span>
+        <span className="[&>svg]:w-4 [&>svg]:h-4 text-gray-500">{icon}</span>
       </button>
 
       <div

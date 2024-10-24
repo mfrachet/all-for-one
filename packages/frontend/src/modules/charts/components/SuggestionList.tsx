@@ -2,6 +2,7 @@ import { Tag } from "../../../components/Tag";
 import { useMessages } from "../../conversation/context/useMessages";
 import { Suggestion } from "../types";
 import { Skeleton } from "../../../components/Skeleton";
+import { useToggleSideNav } from "../../conversation/context/useToggleSideNav";
 
 export interface SuggestionListProps {
   suggestions: Array<Suggestion>;
@@ -13,6 +14,7 @@ export const SuggestionList = ({
   isLoading,
 }: SuggestionListProps) => {
   const { addMessage } = useMessages();
+  const triggerSideNav = useToggleSideNav();
 
   if (isLoading)
     return (
@@ -33,7 +35,10 @@ export const SuggestionList = ({
         {suggestions.map((suggestion) => (
           <Tag
             key={suggestion.title}
-            onClick={() => addMessage(suggestion.title)}
+            onClick={() => {
+              triggerSideNav(true);
+              addMessage(suggestion.title);
+            }}
           >
             {suggestion.title}
           </Tag>

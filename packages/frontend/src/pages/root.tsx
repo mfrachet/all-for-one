@@ -23,6 +23,8 @@ import { ChartsProvider } from "../modules/charts/contexts/ChartsProvider";
 import { AiResponseEntry } from "../types";
 import { getConversation } from "../modules/conversation/services/getConversation";
 import { Conversation } from "../modules/conversation/types";
+import { useState } from "react";
+import { SideNavProvider } from "../modules/conversation/context/SideNavProvider";
 
 export const rootLoader: LoaderFunction = async ({ request }) => {
   try {
@@ -58,6 +60,9 @@ const EmptyConversation = () => {
   );
 };
 export const DashboardRoot = () => {
+  const [leftSideOpen, setLeftSideOpen] = useState(false);
+  const [rightSideOpen, setRightSideOpen] = useState(true);
+
   const { charts, conversation } = useLoaderData() as {
     charts: AiResponseEntry[];
     conversation: Conversation;
@@ -66,45 +71,50 @@ export const DashboardRoot = () => {
   return (
     <MessageProvider conversation={conversation}>
       <ChartsProvider charts={charts}>
-        <SuggestionsProvider>
-          <main className="grid grid-cols-[auto_1fr] h-full">
-            <CollapsibleSide
-              className="h-full border-r border-gray-100 relative bg-white"
-              widthClass="w-64"
-              icon={(open) => (open ? <ChevronLeftIcon /> : <Menu />)}
-              iconSide="right"
-              initialOpen={false}
-            >
-              <div className="pt-5">
-                <Navbar>
-                  <NavItem to="/dashboard" icon={<HomeIcon />}>
-                    Dashboard
-                  </NavItem>
-                </Navbar>
-              </div>
-            </CollapsibleSide>
+        <SideNavProvider onOpenChange={setRightSideOpen}>
+          <SuggestionsProvider>
+            <main className="grid grid-cols-[auto_1fr] h-full">
+              <CollapsibleSide
+                className="h-full border-r border-gray-100 relative bg-white"
+                widthClass="w-64"
+                icon={leftSideOpen ? <ChevronLeftIcon /> : <Menu />}
+                iconSide="right"
+                open={leftSideOpen}
+                onOpenChange={setLeftSideOpen}
+              >
+                <div className="pt-5">
+                  <Navbar>
+                    <NavItem to="/dashboard" icon={<HomeIcon />}>
+                      Dashboard
+                    </NavItem>
+                  </Navbar>
+                </div>
+              </CollapsibleSide>
 
-            <div className="pt-4 pb-20 pl-12 pr-24 bg-gray-50 h-full">
-              <Outlet />
-            </div>
-
-            <CollapsibleSide
-              className="overflow-hidden border-l border-gray-100 h-full px-4 py-4 fixed right-0 top-0 bottom-0 bg-white"
-              widthClass="w-1/2"
-              icon={(open) =>
-                open ? (
-                  <ChevronRightIcon />
-                ) : (
-                  <MessageCircle className="text-emerald-500" />
-                )
-              }
-            >
-              <div className="pt-12 h-full">
-                <AiFeed emptyState={<EmptyConversation />} />
+              <div className="pt-4 pb-20 pl-12 pr-24 bg-gray-50 h-full">
+                <Outlet />
               </div>
-            </CollapsibleSide>
-          </main>
-        </SuggestionsProvider>
+
+              <CollapsibleSide
+                className="overflow-hidden border-l border-gray-100 h-full px-4 py-4 fixed right-0 top-0 bottom-0 bg-white"
+                widthClass="w-1/2"
+                icon={
+                  rightSideOpen ? (
+                    <ChevronRightIcon />
+                  ) : (
+                    <MessageCircle className="text-emerald-500" />
+                  )
+                }
+                open={rightSideOpen}
+                onOpenChange={setRightSideOpen}
+              >
+                <div className="pt-12 h-full">
+                  <AiFeed emptyState={<EmptyConversation />} />
+                </div>
+              </CollapsibleSide>
+            </main>
+          </SuggestionsProvider>
+        </SideNavProvider>
       </ChartsProvider>
     </MessageProvider>
   );
