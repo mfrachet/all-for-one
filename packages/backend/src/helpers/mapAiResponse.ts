@@ -1,12 +1,12 @@
-import { ExpectedSqlColumns, SqlChartType } from "@all-for-one/ai";
+import { ExpectedSqlColumns } from "@all-for-one/ai";
+import { getPastelColor } from "./pastelColors";
 import {
-  ExpectedOutput,
-  LineChartOutput,
-  ParagraphOutput,
   PersistentChart,
+  ExpectedOutput,
+  ParagraphOutput,
+  LineChartOutput,
   PieChartOutput,
 } from "../types";
-import { getRandomPastelColor, getRandomPastelColors } from "./pastelColors";
 
 export const mapAiResponse = (
   chart: PersistentChart,
@@ -21,7 +21,7 @@ export const mapAiResponse = (
       id: chart.id,
       title: chart.title,
       type: "paragraph",
-      color: getRandomPastelColor(chart.title),
+      color: getPastelColor(chart.title),
       data: response?.data[0]?.text ?? "No data found",
     };
     return [paragraphOutput];
@@ -39,13 +39,12 @@ export const mapAiResponse = (
       return acc;
     }, {} as Record<string, Array<{ x: number | string | Date; y: number }>>);
 
-    const colors = getRandomPastelColors(Object.keys(groupedByKey).length);
     const lineChartOutput: LineChartOutput = {
       id: chart.id,
       title: chart.title,
       type: "lineChart",
       data: Object.entries(groupedByKey).map(([groupingKey, data], index) => ({
-        color: colors[index],
+        color: getPastelColor(groupingKey),
         id: groupingKey,
         data,
       })),
@@ -55,16 +54,15 @@ export const mapAiResponse = (
   }
 
   if (response.type === "pieChart") {
-    const colors = getRandomPastelColors(response.data.length);
     const pieChartOutput: PieChartOutput = {
       id: chart.id,
       title: chart.title,
       type: "pieChart",
-      data: response.data.map((item, index) => ({
+      data: response.data.map((item) => ({
         id: item.category,
         label: item.category,
         value: Number(item.value),
-        color: colors[index],
+        color: getPastelColor(item.category),
       })),
     };
     return [pieChartOutput];
