@@ -1,13 +1,10 @@
 import { Section, SectionHeader } from "../components/Section";
 import { Title } from "../components/Title";
-import { BigStat } from "../components/BigStat";
-import { LineChart } from "../components/charts/LineChart/LineChart";
-import { ChartCard } from "../components/ChartCard";
-import { PieChart } from "../components/charts/PieChart/PieChart";
 import { BadgeDollarSign, ChartLine, ChartPie } from "lucide-react";
 import { SuggestionList } from "../modules/charts/components/SuggestionList";
 import { useCharts } from "../modules/charts/contexts/useCharts";
 import { useSuggestions } from "../modules/charts/contexts/useSuggestions";
+import { ChartFactory } from "../components/ChartFactory";
 
 export const DashboardIndex = () => {
   const charts = useCharts();
@@ -40,12 +37,7 @@ export const DashboardIndex = () => {
           {paragraphs.length > 0 && (
             <div className="flex flex-row gap-4 pb-4">
               {paragraphs.map((p) => (
-                <BigStat
-                  key={p.id}
-                  title={p.title}
-                  value={p.data}
-                  color={p.color}
-                />
+                <ChartFactory chart={p} key={p.id} action="unpin" />
               ))}
             </div>
           )}
@@ -67,9 +59,7 @@ export const DashboardIndex = () => {
           {lineCharts.length > 0 && (
             <div className={chartGridCss}>
               {lineCharts.map((c) => (
-                <ChartCard key={c.id} title={c.title}>
-                  <LineChart data={c.data} />
-                </ChartCard>
+                <ChartFactory chart={c} key={c.id} action="unpin" />
               ))}
             </div>
           )}
@@ -91,9 +81,7 @@ export const DashboardIndex = () => {
           {pieCharts.length > 0 && (
             <div className={chartGridCss}>
               {pieCharts.map((c) => (
-                <ChartCard key={c.id} title={c.title}>
-                  <PieChart data={c.data} />
-                </ChartCard>
+                <ChartFactory chart={c} key={c.id} action="unpin" />
               ))}
             </div>
           )}

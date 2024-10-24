@@ -13,9 +13,7 @@ const PinIcon = () => {
 };
 
 const UnpinIcon = () => {
-  return (
-    <PinOff className="w-4 h-4 text-gray-500 transition-all group-hover:translate-y-0.5 group-active:translate-y-1" />
-  );
+  return <PinOff className="w-4 h-4 text-gray-500" />;
 };
 
 export const PinButton = ({ isLoading, side = "pin" }: PinButtonProps) => {
