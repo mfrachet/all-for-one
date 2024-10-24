@@ -53,13 +53,6 @@ export class PersistentChartController {
       []
     );
 
-    console.log(
-      "xx",
-      getSuggestionsPrompt(
-        alreadyExistingCharts.map((chart) => chart.title).join(", ")
-      )
-    );
-
     return JSON.parse(response || "[]");
   }
 }
