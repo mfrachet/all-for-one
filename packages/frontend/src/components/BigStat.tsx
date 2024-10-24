@@ -8,7 +8,7 @@ export const BigStat = ({ title, value, color }: BigStatProps) => {
   return (
     <div className="flex flex-row gap-2 min-w-24 bg-white rounded-lg overflow-hidden border border-gray-100">
       <div
-        className="h-full w-1 rounded-full"
+        className="w-1 rounded-full"
         style={{ backgroundColor: color }}
       ></div>
 
