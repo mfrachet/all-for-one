@@ -3,7 +3,7 @@ import { sendConversationMessage } from "../services/sendConversationMessage";
 import { ConversationResponse } from "../types";
 
 export const useSendConversationMessage = (
-  onSuccess?: (response: ConversationResponse[]) => void
+  onSuccess?: (response: ConversationResponse[] | { error: string }) => void
 ) => {
   const mutation = useMutation({
     mutationFn: ({

@@ -15,6 +15,8 @@ export const MessageProvider = ({
 }: MessageProviderProps) => {
   const [messages, setMessages] = useState<Array<AiResponseEntry>>([]);
   const mutation = useSendConversationMessage((response) => {
+    if ("error" in response) return;
+
     setMessages((s) =>
       s.concat(response.map((r) => ({ ...r, isResponse: true })))
     );
