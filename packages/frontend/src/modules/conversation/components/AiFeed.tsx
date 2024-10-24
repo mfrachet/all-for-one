@@ -4,7 +4,7 @@ import { QuestionInput } from "../../../components/QuestionInput";
 import { Spinner } from "../../../components/Spinner";
 import { useScrollDown } from "../../misc/hooks/useScrollDown";
 import { useMessages } from "../context/useMessages";
-
+import { Code } from "./Code";
 export interface AiFeedProps {
   emptyState?: React.ReactNode;
 }
@@ -24,6 +24,7 @@ export const AiFeed = ({ emptyState }: AiFeedProps) => {
               {message.isResponse ? (
                 <Message isResponse>
                   <ChartFactory chart={message} />
+                  <Code sqlQuery={message.sqlQuery} />
                 </Message>
               ) : message.type === "paragraph" ? (
                 <Message isResponse={false}>{message.data}</Message>

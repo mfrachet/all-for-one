@@ -72,6 +72,7 @@ export class ComputeService {
             data,
           })
         ),
+        sqlQuery: chart.sqlQuery,
       };
 
       return [lineChartOutput];
@@ -88,6 +89,7 @@ export class ComputeService {
           value: Number(item.value),
           color: getPastelColor(item.category),
         })),
+        sqlQuery: chart.sqlQuery,
       };
       return [pieChartOutput];
     }
@@ -102,6 +104,7 @@ export class ComputeService {
           value: Number(item.value),
           color: getPastelColor(item.id),
         })),
+        sqlQuery: chart.sqlQuery,
       };
 
       return [mapChartOutput];

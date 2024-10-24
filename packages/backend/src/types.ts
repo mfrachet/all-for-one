@@ -16,6 +16,7 @@ export type LineChartOutput = {
       y: number;
     }>;
   }>;
+  sqlQuery?: string;
 };
 
 export type ParagraphOutput = {
@@ -24,6 +25,7 @@ export type ParagraphOutput = {
   type: "paragraph";
   data: string;
   color: string;
+  sqlQuery?: string;
 };
 
 export type PieChartOutput = {
@@ -36,12 +38,14 @@ export type PieChartOutput = {
     value: number;
     color: string;
   }>;
+  sqlQuery?: string;
 };
 
 export type MapChartOutput = {
   id: string;
   type: "mapChart";
   title: string;
+  sqlQuery?: string;
   data: Array<{
     id: string;
     value: number;
