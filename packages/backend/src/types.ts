@@ -56,3 +56,10 @@ export type Suggestion = {
   title: string;
   type: "lineChart" | "pieChart" | "paragraph";
 };
+
+export type ConversationEntry = FormattedResponse & { isResponse?: boolean };
+
+export type Conversation = {
+  id: string;
+  messages: Array<ConversationEntry>;
+};

@@ -1,4 +1,4 @@
-import { Form, useNavigation } from "react-router-dom";
+import { Form, useLocation, useNavigation } from "react-router-dom";
 import { AiResponseEntry } from "../types";
 import { BigStat } from "./BigStat";
 import { LineChart } from "./charts/LineChart/LineChart";
@@ -13,6 +13,7 @@ export interface ChartFactoryProps {
 
 export const ChartFactory = ({ chart, action = "pin" }: ChartFactoryProps) => {
   const navigation = useNavigation();
+  const location = useLocation();
 
   const isSubmitPending =
     navigation.state !== "idle" &&
@@ -22,7 +23,7 @@ export const ChartFactory = ({ chart, action = "pin" }: ChartFactoryProps) => {
   return (
     <Form
       method="post"
-      action="/"
+      action={`${location.pathname}${location.search.toString()}`}
       className={`relative ${chart.type === "paragraph" ? "inline-block" : ""}`}
     >
       <input type="hidden" name="chartId" value={chart.id} />
@@ -38,14 +39,7 @@ export const ChartFactory = ({ chart, action = "pin" }: ChartFactoryProps) => {
           </ChartCard>
         )}
         {chart.type === "paragraph" && (
-          <div>
-            {chart.id}
-            <BigStat
-              value={chart.data}
-              title={chart.title}
-              color={chart.color}
-            />
-          </div>
+          <BigStat value={chart.data} title={chart.title} color={chart.color} />
         )}
       </>
 

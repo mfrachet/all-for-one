@@ -1,3 +1,5 @@
+import { AiResponseEntry } from "../../types";
+
 type LineChartOutput = {
   id: string;
   title: string;
@@ -36,3 +38,8 @@ export type ConversationResponse =
   | LineChartOutput
   | ParagraphOutput
   | PieChartOutput;
+
+export type Conversation = {
+  id: string;
+  messages: Array<AiResponseEntry>;
+};

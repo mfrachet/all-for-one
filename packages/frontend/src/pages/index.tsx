@@ -5,6 +5,18 @@ import { SuggestionList } from "../modules/charts/components/SuggestionList";
 import { useCharts } from "../modules/charts/contexts/useCharts";
 import { useSuggestions } from "../modules/charts/contexts/useSuggestions";
 import { ChartFactory } from "../components/ChartFactory";
+import { ActionFunction } from "react-router-dom";
+import { pinUnpinChart } from "../modules/charts/services/pinUnpinChart";
+
+export const dashboardIndexAction: ActionFunction = async ({ request }) => {
+  const formData = await request.formData();
+
+  const chartId = formData.get("chartId")?.toString() ?? "";
+
+  await pinUnpinChart(chartId);
+
+  return null;
+};
 
 export const DashboardIndex = () => {
   const charts = useCharts();

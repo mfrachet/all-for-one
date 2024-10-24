@@ -21,15 +21,23 @@ import { MessageProvider } from "../modules/conversation/context/MessageProvider
 import { SuggestionsProvider } from "../modules/charts/contexts/SuggestionsProvider";
 import { ChartsProvider } from "../modules/charts/contexts/ChartsProvider";
 import { AiResponseEntry } from "../types";
+import { getConversation } from "../modules/conversation/services/getConversation";
+import { Conversation } from "../modules/conversation/types";
 
-export const rootLoader: LoaderFunction = async () => {
+export const rootLoader: LoaderFunction = async ({ request }) => {
   try {
+    const url = new URL(request.url);
+    const conversationId = url.searchParams.get("c")?.toString() ?? nanoid();
+
     await getMe();
-    const charts = await getCharts();
+    const [conversation, charts] = await Promise.all([
+      getConversation(conversationId || ""),
+      getCharts(),
+    ]);
 
-    if (charts.length === 0) return redirect(`/c/${nanoid()}`);
+    if (charts.length === 0) return redirect(`/c/${conversationId}`);
 
-    return { charts };
+    return { charts, conversation };
   } catch {
     return redirect("/login");
   }
@@ -50,12 +58,13 @@ const EmptyConversation = () => {
   );
 };
 export const DashboardRoot = () => {
-  const { charts } = useLoaderData() as {
+  const { charts, conversation } = useLoaderData() as {
     charts: AiResponseEntry[];
+    conversation: Conversation;
   };
 
   return (
-    <MessageProvider conversationId="1">
+    <MessageProvider conversation={conversation}>
       <ChartsProvider charts={charts}>
         <SuggestionsProvider>
           <main className="grid grid-cols-[auto_1fr] h-full">

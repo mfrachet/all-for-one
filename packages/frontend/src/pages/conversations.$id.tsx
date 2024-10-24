@@ -1,10 +1,19 @@
-import { Link, useParams } from "react-router-dom";
+import {
+  ActionFunction,
+  Link,
+  LoaderFunction,
+  redirect,
+  useLoaderData,
+} from "react-router-dom";
 import { AiFeed } from "../modules/conversation/components/AiFeed";
 import { Button } from "../components/Button";
 import { ChartSpline, SquarePen } from "lucide-react";
 import { nanoid } from "nanoid";
 import { Logo } from "../components/Logo";
 import { MessageProvider } from "../modules/conversation/context/MessageProvider";
+import { getConversation } from "../modules/conversation/services/getConversation";
+import { Conversation } from "../modules/conversation/types";
+import { pinUnpinChart } from "../modules/charts/services/pinUnpinChart";
 
 const EmptyConversation = () => {
   return (
@@ -33,11 +42,30 @@ const EmptyConversation = () => {
   );
 };
 
+export const conversationIdLoader: LoaderFunction = async ({ params }) => {
+  const conversation = await getConversation(params.id!);
+
+  return { conversation };
+};
+
+export const conversationIdAction: ActionFunction = async ({
+  request,
+  params,
+}) => {
+  const formData = await request.formData();
+
+  const chartId = formData.get("chartId")?.toString() ?? "";
+
+  await pinUnpinChart(chartId);
+
+  return redirect(`/?c=${params.id}`);
+};
+
 export const ConversationsId = () => {
-  const { id } = useParams();
+  const { conversation } = useLoaderData() as { conversation: Conversation };
 
   return (
-    <MessageProvider conversationId={id!}>
+    <MessageProvider conversation={conversation}>
       <main className="h-full py-4 pt-20 max-w-4xl mx-auto relative">
         <div className="absolute top-4 right-4 flex flex-row justify-between gap-2 w-full items-center">
           <Logo />
@@ -46,7 +74,7 @@ export const ConversationsId = () => {
           </Button>
         </div>
 
-        <AiFeed key={id!} emptyState={<EmptyConversation />} />
+        <AiFeed key={conversation.id} emptyState={<EmptyConversation />} />
       </main>
     </MessageProvider>
   );
