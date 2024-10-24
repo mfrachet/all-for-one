@@ -23,7 +23,9 @@ export const DashboardIndex = () => {
   const { suggestions, isLoading } = useSuggestions();
 
   const paragraphs = charts.filter((c) => c.type === "paragraph");
-  const lineCharts = charts.filter((c) => c.type === "lineChart");
+  const lineCharts = charts.filter(
+    (c) => c.type === "lineChart" || c.type === "mapChart"
+  );
   const pieCharts = charts.filter((c) => c.type === "pieChart");
 
   const chartGridCss = "grid grid-cols-3 gap-4 pb-4";
@@ -84,7 +86,9 @@ export const DashboardIndex = () => {
           <SuggestionList
             isLoading={isLoading}
             suggestions={suggestions.filter(
-              (suggestion) => suggestion.type === "lineChart"
+              (suggestion) =>
+                suggestion.type === "lineChart" ||
+                suggestion.type === "mapChart"
             )}
           />
         </Section>
