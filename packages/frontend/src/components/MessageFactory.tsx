@@ -3,8 +3,7 @@ import { Message } from "./Message";
 import { ChartWrapper } from "./ChartWrapper";
 import { Form, useNavigation } from "react-router-dom";
 import { ChartFactory } from "./ChartFactory";
-import { Pin } from "lucide-react";
-import { Spinner } from "./Spinner";
+
 import { PinButton } from "./PinButton";
 
 const ResponseMessage = ({ message }: { message: AiResponseEntry }) => {
@@ -14,8 +13,6 @@ const ResponseMessage = ({ message }: { message: AiResponseEntry }) => {
     navigation.state !== "idle" &&
     navigation.formMethod === "post" &&
     navigation?.formData?.get("chartId")?.toString() === message.id;
-
-  const btnClass = "p-2 rounded-xl hover:bg-gray-100 active:bg-gray-200";
 
   if (message.type === "paragraph") {
     return (
