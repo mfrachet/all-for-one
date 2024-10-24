@@ -7,7 +7,7 @@ export interface MessageProps {
 
 export const Message = ({ children, isResponse = false }: MessageProps) => {
   if (isResponse) {
-    return <div className="py-4 max-w-sm">{children}</div>;
+    return <div className="py-4 max-w-2xl">{children}</div>;
   }
 
   return (

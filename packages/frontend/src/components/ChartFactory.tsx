@@ -4,7 +4,7 @@ import { BigStat } from "./BigStat";
 import { LineChart } from "./charts/LineChart/LineChart";
 import { PieChart } from "./charts/PieChart/PieChart";
 import { PinButton } from "./PinButton";
-import { ChartWrapper } from "./ChartWrapper";
+import { ChartCard } from "./ChartCard";
 
 export const ChartFactory = ({ chart }: { chart: AiResponseEntry }) => {
   const navigation = useNavigation();
@@ -23,14 +23,14 @@ export const ChartFactory = ({ chart }: { chart: AiResponseEntry }) => {
       <input type="hidden" name="chartId" value={chart.id} />
       <>
         {chart.type === "lineChart" && (
-          <ChartWrapper>
+          <ChartCard title={chart.title}>
             <LineChart data={chart.data} />
-          </ChartWrapper>
+          </ChartCard>
         )}
         {chart.type === "pieChart" && (
-          <ChartWrapper>
+          <ChartCard title={chart.title}>
             <PieChart data={chart.data} />
-          </ChartWrapper>
+          </ChartCard>
         )}
         {chart.type === "paragraph" && (
           <BigStat value={chart.data} title={chart.title} color={chart.color} />
