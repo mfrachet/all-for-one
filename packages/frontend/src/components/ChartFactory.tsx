@@ -5,6 +5,7 @@ import { LineChart } from "./charts/LineChart/LineChart";
 import { PieChart } from "./charts/PieChart/PieChart";
 import { PinButton } from "./PinButton";
 import { ChartCard } from "./ChartCard";
+import { MapChart } from "./charts/MapChart/MapChart";
 
 export interface ChartFactoryProps {
   chart: AiResponseEntry;
@@ -35,6 +36,11 @@ export const ChartFactory = ({ chart }: ChartFactoryProps) => {
         {chart.type === "pieChart" && (
           <ChartCard title={chart.title}>
             <PieChart data={chart.data} />
+          </ChartCard>
+        )}
+        {chart.type === "mapChart" && (
+          <ChartCard title={chart.title}>
+            <MapChart data={chart.data} />
           </ChartCard>
         )}
         {chart.type === "paragraph" && (
