@@ -26,17 +26,21 @@ export const pastelColors = [
 ];
 
 const MAX_INT_32 = Math.pow(2, 32);
-const pastelColorsLength = pastelColors.length;
 
-export const getPastelColor = (title: string) => {
+export const getPastelColor = (title: string, colors = pastelColors) => {
+  const pastelColorsLength = colors.length;
   const hash = murmur3(title);
   const percent = hash / MAX_INT_32;
   const index = Math.round(percent * pastelColorsLength);
 
-  return pastelColors[index];
+  return colors[index];
 };
 
 export const getPasterColorsForTitles = (titles: string[]) => {
+  if (titles.length === 1) {
+    return { [titles[0]]: getPastelColor(titles[0], pastelColors.slice(0, 8)) };
+  }
+
   const sortedTitles = titles.sort();
 
   return Object.fromEntries(
