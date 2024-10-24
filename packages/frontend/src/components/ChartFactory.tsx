@@ -6,6 +6,7 @@ import { PieChart } from "./charts/PieChart/PieChart";
 import { PinButton } from "./PinButton";
 import { ChartCard } from "./ChartCard";
 import { MapChart } from "./charts/MapChart/MapChart";
+import { Table } from "./charts/Table";
 
 export interface ChartFactoryProps {
   chart: AiResponseEntry;
@@ -45,6 +46,11 @@ export const ChartFactory = ({ chart }: ChartFactoryProps) => {
         )}
         {chart.type === "paragraph" && (
           <BigStat value={chart.data} title={chart.title} color={chart.color} />
+        )}
+        {chart.type === "table" && (
+          <ChartCard title={chart.title}>
+            <Table data={chart.data} />
+          </ChartCard>
         )}
       </>
 

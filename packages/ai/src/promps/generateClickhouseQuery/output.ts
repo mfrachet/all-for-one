@@ -1,4 +1,9 @@
-export type SqlChartType = "lineChart" | "pieChart" | "paragraph" | "mapChart";
+export type SqlChartType =
+  | "lineChart"
+  | "pieChart"
+  | "paragraph"
+  | "mapChart"
+  | "table";
 
 export type ExpectedSqlOutput<T extends SqlChartType> = {
   type: T;
@@ -37,7 +42,17 @@ export type MapChart = {
   }>;
 };
 
-export type ExpectedSqlColumns = LineChart | PieChart | Paragraph | MapChart;
+export type Table = {
+  type: "table";
+  data: Array<Record<string, any>>;
+};
+
+export type ExpectedSqlColumns =
+  | LineChart
+  | PieChart
+  | Paragraph
+  | MapChart
+  | Table;
 
 export const expectedSqlColumns = `
   For lineChart, the columns should follow this format: {x:date, y:number, groupingKey?:string}. groupingKey should be a name, id, or some identifier. 
@@ -51,11 +66,15 @@ export const expectedSqlColumns = `
   For mapChart, the columns should be: {id: string, value: number}.
   For mapChart, sometimes you will ended reaching a field that is a JSON: in this case, you should extract the country.
 
+  For table, the columns are dynamic, and should be the columns of the query.
+  For table, the value in each column should always be a primitive value (string, number, boolean, date).
+  For table, the number of rows should be less than 10.
+
   If your are asked to provide data by country, try to use a mapChart.
 `;
 
 export const expectedOutput = `
-export type SqlChartType = "lineChart" | "pieChart" | "paragraph" | "mapChart";
+export type SqlChartType = "lineChart" | "pieChart" | "paragraph" | "mapChart" | "table";
 
 export type ExpectedSqlOutput<T extends SqlChartType> = {
   type: T;

@@ -1,4 +1,4 @@
 export type Suggestion = {
   title: string;
-  type: "lineChart" | "pieChart" | "paragraph" | "mapChart";
+  type: "lineChart" | "pieChart" | "paragraph" | "mapChart" | "table";
 };

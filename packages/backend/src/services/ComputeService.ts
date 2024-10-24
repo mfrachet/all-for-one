@@ -7,6 +7,7 @@ import {
   ParagraphOutput,
   PersistentChart,
   PieChartOutput,
+  TableOutput,
 } from "../types";
 import { getPastelColor } from "../helpers/pastelColors";
 
@@ -108,6 +109,17 @@ export class ComputeService {
       };
 
       return [mapChartOutput];
+    }
+
+    if (response.type === "table") {
+      const tableOutput: TableOutput = {
+        id: chart.id,
+        title: chart.title,
+        type: "table",
+        data: response.data,
+      };
+
+      return [tableOutput];
     }
 
     return [];

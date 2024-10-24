@@ -49,11 +49,20 @@ export type MapChartOutput = {
   sqlQuery?: string;
 };
 
+export type TableOutput = {
+  id: string;
+  type: "table";
+  title: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  data: Array<Record<string, any>>;
+};
+
 export type ConversationResponse =
   | LineChartOutput
   | ParagraphOutput
   | PieChartOutput
-  | MapChartOutput;
+  | MapChartOutput
+  | TableOutput;
 
 export type Conversation = {
   id: string;

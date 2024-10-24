@@ -53,11 +53,19 @@ export type MapChartOutput = {
   }>;
 };
 
+export type TableOutput = {
+  id: string;
+  title: string;
+  type: "table";
+  data: Array<Record<string, any>>;
+};
+
 export type FormattedResponse =
   | LineChartOutput
   | ParagraphOutput
   | PieChartOutput
-  | MapChartOutput;
+  | MapChartOutput
+  | TableOutput;
 
 export type ExpectedOutput = FormattedResponse[];
 
@@ -65,12 +73,12 @@ export type PersistentChart = {
   id: string;
   title: string;
   sqlQuery: string;
-  type: "lineChart" | "pieChart" | "paragraph" | "mapChart";
+  type: "lineChart" | "pieChart" | "paragraph" | "mapChart" | "table";
 };
 
 export type Suggestion = {
   title: string;
-  type: "lineChart" | "pieChart" | "paragraph" | "mapChart";
+  type: "lineChart" | "pieChart" | "paragraph" | "mapChart" | "table";
 };
 
 export type ConversationEntry = FormattedResponse & { isResponse?: boolean };
