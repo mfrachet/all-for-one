@@ -118,6 +118,7 @@ export class ComputeService {
         title: chart.title,
         type: "table",
         data: response.data,
+        sqlQuery: chart.sqlQuery,
       };
 
       return [tableOutput];

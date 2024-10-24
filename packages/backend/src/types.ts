@@ -58,6 +58,7 @@ export type TableOutput = {
   title: string;
   type: "table";
   data: Array<Record<string, any>>;
+  sqlQuery?: string;
 };
 
 export type FormattedResponse =
