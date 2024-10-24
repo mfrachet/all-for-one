@@ -13,6 +13,4 @@ export const generateClickhouseQuery = (input: string) => `
     Don't apply ORDER BY clause by default but only when really needed.
 
     Here's the question: "${input}".
-
-    In the queries, if value are null or empty, we should use "No value available" instead.
 `;
