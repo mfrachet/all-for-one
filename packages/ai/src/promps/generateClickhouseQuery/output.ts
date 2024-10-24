@@ -29,7 +29,15 @@ export type Paragraph = {
   data: Array<{ text: string }>;
 };
 
-export type ExpectedSqlColumns = LineChart | PieChart | Paragraph;
+export type MapChart = {
+  type: "mapChart";
+  data: Array<{
+    id: string;
+    value: number;
+  }>;
+};
+
+export type ExpectedSqlColumns = LineChart | PieChart | Paragraph | MapChart;
 
 export const expectedSqlColumns = `
   For line chart, the columns should follow this format: {x:date, y:number, groupingKey?:string}. groupingKey should be a name, id, or some identifier.
