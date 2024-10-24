@@ -14,6 +14,7 @@ import { MessageProvider } from "../modules/conversation/context/MessageProvider
 import { getConversation } from "../modules/conversation/services/getConversation";
 import { Conversation } from "../modules/conversation/types";
 import { pinUnpinChart } from "../modules/charts/services/pinUnpinChart";
+import { ChartsProvider } from "../modules/charts/contexts/ChartsProvider";
 
 const EmptyConversation = () => {
   return (
@@ -65,17 +66,19 @@ export const ConversationsId = () => {
   const { conversation } = useLoaderData() as { conversation: Conversation };
 
   return (
-    <MessageProvider conversation={conversation}>
-      <main className="h-full py-4 pt-20 max-w-4xl mx-auto relative">
-        <div className="absolute top-4 right-4 flex flex-row justify-between gap-2 w-full items-center">
-          <Logo />
-          <Button as={Link} to={`/c/${nanoid()}`} icon={<SquarePen />}>
-            Start over
-          </Button>
-        </div>
+    <ChartsProvider charts={[]}>
+      <MessageProvider conversation={conversation}>
+        <main className="h-full py-4 pt-20 max-w-4xl mx-auto relative">
+          <div className="absolute top-4 right-4 flex flex-row justify-between gap-2 w-full items-center">
+            <Logo />
+            <Button as={Link} to={`/c/${nanoid()}`} icon={<SquarePen />}>
+              Start over
+            </Button>
+          </div>
 
-        <AiFeed key={conversation.id} emptyState={<EmptyConversation />} />
-      </main>
-    </MessageProvider>
+          <AiFeed key={conversation.id} emptyState={<EmptyConversation />} />
+        </main>
+      </MessageProvider>
+    </ChartsProvider>
   );
 };

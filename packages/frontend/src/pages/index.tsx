@@ -19,7 +19,7 @@ export const dashboardIndexAction: ActionFunction = async ({ request }) => {
 };
 
 export const DashboardIndex = () => {
-  const charts = useCharts();
+  const { charts } = useCharts();
   const { suggestions, isLoading } = useSuggestions();
 
   const paragraphs = charts.filter((c) => c.type === "paragraph");
@@ -49,7 +49,7 @@ export const DashboardIndex = () => {
           {paragraphs.length > 0 && (
             <div className="flex flex-row gap-4 pb-4">
               {paragraphs.map((p) => (
-                <ChartFactory chart={p} key={p.id} action="unpin" />
+                <ChartFactory chart={p} key={p.id} />
               ))}
             </div>
           )}
@@ -76,7 +76,7 @@ export const DashboardIndex = () => {
           {lineCharts.length > 0 && (
             <div className={chartGridCss}>
               {lineCharts.map((c) => (
-                <ChartFactory chart={c} key={c.id} action="unpin" />
+                <ChartFactory chart={c} key={c.id} />
               ))}
             </div>
           )}
@@ -103,7 +103,7 @@ export const DashboardIndex = () => {
           {pieCharts.length > 0 && (
             <div className={chartGridCss}>
               {pieCharts.map((c) => (
-                <ChartFactory chart={c} key={c.id} action="unpin" />
+                <ChartFactory chart={c} key={c.id} />
               ))}
             </div>
           )}

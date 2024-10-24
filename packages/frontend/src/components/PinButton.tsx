@@ -1,9 +1,10 @@
 import { Pin, PinOff } from "lucide-react";
 import { Spinner } from "./Spinner";
+import { useCharts } from "../modules/charts/contexts/useCharts";
 
 export interface PinButtonProps {
   isLoading: boolean;
-  side?: "pin" | "unpin";
+  chartId: string;
 }
 
 const PinIcon = () => {
@@ -16,8 +17,9 @@ const UnpinIcon = () => {
   return <PinOff className="w-4 h-4 text-gray-500" />;
 };
 
-export const PinButton = ({ isLoading, side = "pin" }: PinButtonProps) => {
-  const Icon = side === "pin" ? PinIcon : UnpinIcon;
+export const PinButton = ({ isLoading, chartId }: PinButtonProps) => {
+  const { chartsDict } = useCharts();
+  const Icon = chartsDict[chartId] ? UnpinIcon : PinIcon;
 
   return (
     <button

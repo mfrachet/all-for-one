@@ -8,10 +8,9 @@ import { ChartCard } from "./ChartCard";
 
 export interface ChartFactoryProps {
   chart: AiResponseEntry;
-  action?: "pin" | "unpin";
 }
 
-export const ChartFactory = ({ chart, action = "pin" }: ChartFactoryProps) => {
+export const ChartFactory = ({ chart }: ChartFactoryProps) => {
   const navigation = useNavigation();
   const location = useLocation();
 
@@ -44,7 +43,7 @@ export const ChartFactory = ({ chart, action = "pin" }: ChartFactoryProps) => {
       </>
 
       <div className="absolute right-0 top-0 -translate-y-1/2 translate-x-1/2">
-        <PinButton isLoading={isSubmitPending} side={action} />
+        <PinButton isLoading={isSubmitPending} chartId={chart.id} />
       </div>
     </Form>
   );
