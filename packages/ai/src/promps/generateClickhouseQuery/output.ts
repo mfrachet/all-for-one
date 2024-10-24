@@ -40,8 +40,12 @@ export type MapChart = {
 export type ExpectedSqlColumns = LineChart | PieChart | Paragraph | MapChart;
 
 export const expectedSqlColumns = `
-  For lineChart, the columns should follow this format: {x:date, y:number, groupingKey?:string}. groupingKey should be a name, id, or some identifier.
+  For lineChart, the columns should follow this format: {x:date, y:number, groupingKey?:string}. groupingKey should be a name, id, or some identifier. 
+  For lineChart, the x should be a date, and we should use toStartOfMonth, toStartOfDay, toStartOfYear.  We don't want to have a granularity of seconds, minutes or hours. 
+  For lineChart, the x granularity if not specified, should be toStartOfMonth.
+  
   For pieChart, the columns should be: {category: string, value: number, groupingKey?:string}. groupingKey should be a name, id, or some identifier.
+  
   For paragraph, the columns should follow this format: {text: string} and should only contain the result of the query, nothing else.
 
   For mapChart, the columns should be: {id: string, value: number}.
