@@ -61,10 +61,10 @@ export class ComputeController {
       await this.conversationService.createUserMessage(conversationId, input);
 
       for (const chartResponse of chartsResponse) {
-        await this.conversationService.appendEntry(
-          conversationId,
-          chartResponse
-        );
+        await this.conversationService.appendEntry(conversationId, {
+          ...chartResponse,
+          isResponse: true,
+        });
       }
 
       return chartsResponse;

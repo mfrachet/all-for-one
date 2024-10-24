@@ -1,5 +1,5 @@
 import { nanoid } from "nanoid";
-import { Conversation, FormattedResponse } from "../types";
+import { Conversation, ConversationEntry } from "../types";
 import { CachingService } from "./CachingService";
 
 export class ConversationService {
@@ -29,7 +29,7 @@ export class ConversationService {
     return conversation;
   }
 
-  async appendEntry(conversationId: string, entry: FormattedResponse) {
+  async appendEntry(conversationId: string, entry: ConversationEntry) {
     const conversation = await this.getOrCreateConversation(conversationId);
 
     conversation.messages.push(entry);
@@ -37,12 +37,13 @@ export class ConversationService {
     return this.setConversation(conversation);
   }
   createUserMessage(conversationId: string, input: string) {
-    const message: FormattedResponse = {
+    const message: ConversationEntry = {
       type: "paragraph",
       data: input,
       id: nanoid(),
       title: "",
       color: "",
+      isResponse: false,
     };
 
     return this.appendEntry(conversationId, message);

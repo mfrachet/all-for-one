@@ -3,17 +3,21 @@ import { useState } from "react";
 import { AiResponseEntry } from "../../../types";
 import { nanoid } from "nanoid";
 import { useSendConversationMessage } from "../hooks/useSendConversationMessage";
+import { Conversation } from "../types";
 
 interface MessageProviderProps {
-  conversationId: string;
+  conversation: Conversation;
   children: React.ReactNode;
 }
 
 export const MessageProvider = ({
   children,
-  conversationId,
+  conversation,
 }: MessageProviderProps) => {
-  const [messages, setMessages] = useState<Array<AiResponseEntry>>([]);
+  const [messages, setMessages] = useState<Array<AiResponseEntry>>(
+    conversation.messages
+  );
+
   const mutation = useSendConversationMessage((response) => {
     setMessages((s) =>
       s.concat(response.map((r) => ({ ...r, isResponse: true })))
@@ -34,7 +38,7 @@ export const MessageProvider = ({
       ])
     );
 
-    mutation.mutate({ conversationId, input: message });
+    mutation.mutate({ conversationId: conversation.id, input: message });
   };
 
   return (
