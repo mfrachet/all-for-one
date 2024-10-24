@@ -1,19 +1,19 @@
 import { murmur3 } from "murmurhash-js";
 
 export const pastelColors = [
-  "#ffd1dc", // Pastel Pink (rgb(255, 209, 220))
-  "#aec6cf", // Pastel Blue (rgb(174, 198, 207))
   "#77dd77", // Pastel Green (rgb(119, 221, 119))
-  "#fdfd96", // Pastel Yellow (rgb(253, 253, 150))
-  "#b19cd9", // Pastel Purple (rgb(177, 156, 217))
+  "#cea2fd", // Pastel Lilac (rgb(206, 162, 253))
   "#ffb347", // Pastel Orange (rgb(255, 179, 71))
   "#ff6961", // Pastel Red (rgb(255, 105, 97))
-  "#bdfcc9", // Pastel Mint (rgb(189, 252, 201))
-  "#cea2fd", // Pastel Lilac (rgb(206, 162, 253))
-  "#aeeeee", // Pastel Cyan (rgb(174, 238, 238))
-  "#ffcc99", // Pastel Peach (rgb(255, 204, 153))
-  "#8fd4be", // Pastel Teal (rgb(143, 212, 190))
+  "#ffd1dc", // Pastel Pink (rgb(255, 209, 220))
+  "#aec6cf", // Pastel Blue (rgb(174, 198, 207))
   "#ffd700", // Pastel Gold (rgb(255, 215, 0))
+  "#8fd4be", // Pastel Teal (rgb(143, 212, 190))
+  "#ffcc99", // Pastel Peach (rgb(255, 204, 153))
+  "#b19cd9", // Pastel Purple (rgb(177, 156, 217))
+  "#bdfcc9", // Pastel Mint (rgb(189, 252, 201))
+  "#aeeeee", // Pastel Cyan (rgb(174, 238, 238))
+  "#fdfd96", // Pastel Yellow (rgb(253, 253, 150))
   "#ffb6c1", // Pastel Light Pink (rgb(255, 182, 193))
   "#c6e2ff", // Pastel Light Blue (rgb(198, 226, 255))
   "#e6e6fa", // Pastel Lavender (rgb(230, 230, 250))
@@ -34,4 +34,15 @@ export const getPastelColor = (title: string) => {
   const index = Math.round(percent * pastelColorsLength);
 
   return pastelColors[index];
+};
+
+export const getPasterColorsForTitles = (titles: string[]) => {
+  const sortedTitles = titles.sort();
+
+  return Object.fromEntries(
+    sortedTitles.map((title, index) => [
+      title,
+      pastelColors.length > index ? pastelColors[index] : getPastelColor(title),
+    ])
+  );
 };

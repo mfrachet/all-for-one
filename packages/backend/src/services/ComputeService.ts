@@ -9,7 +9,10 @@ import {
   PieChartOutput,
   TableOutput,
 } from "../types";
-import { getPastelColor } from "../helpers/pastelColors";
+import {
+  getPastelColor,
+  getPasterColorsForTitles,
+} from "../helpers/pastelColors";
 
 export class ComputeService {
   async execute(chart: PersistentChart) {
@@ -40,11 +43,12 @@ export class ComputeService {
     }
 
     if (response.type === "paragraph") {
+      const colors = getPasterColorsForTitles([chart.title]);
       const paragraphOutput: ParagraphOutput = {
         id: chart.id,
         title: chart.title,
         type: "paragraph",
-        color: getPastelColor(chart.title),
+        color: colors[chart.title],
         data: response?.data[0]?.text ?? "No data found",
         sqlQuery: chart.sqlQuery,
       };
@@ -63,17 +67,16 @@ export class ComputeService {
         return acc;
       }, {} as Record<string, Array<{ x: number | string | Date; y: number }>>);
 
+      const colors = getPasterColorsForTitles(Object.keys(groupedByKey));
       const lineChartOutput: LineChartOutput = {
         id: chart.id,
         title: chart.title,
         type: "lineChart",
-        data: Object.entries(groupedByKey).map(
-          ([groupingKey, data], index) => ({
-            color: getPastelColor(groupingKey),
-            id: groupingKey,
-            data,
-          })
-        ),
+        data: Object.entries(groupedByKey).map(([groupingKey, data]) => ({
+          color: colors[groupingKey],
+          id: groupingKey,
+          data,
+        })),
         sqlQuery: chart.sqlQuery,
       };
 
@@ -81,6 +84,9 @@ export class ComputeService {
     }
 
     if (response.type === "pieChart") {
+      const colors = getPasterColorsForTitles(
+        response.data.map((d) => d.category)
+      );
       const pieChartOutput: PieChartOutput = {
         id: chart.id,
         title: chart.title,
@@ -89,7 +95,7 @@ export class ComputeService {
           id: item.category,
           label: item.category,
           value: Number(item.value),
-          color: getPastelColor(item.category),
+          color: colors[item.category],
         })),
         sqlQuery: chart.sqlQuery,
       };
@@ -97,6 +103,7 @@ export class ComputeService {
     }
 
     if (response.type === "mapChart") {
+      const colors = getPasterColorsForTitles(response.data.map((d) => d.id));
       const mapChartOutput: MapChartOutput = {
         id: chart.id,
         title: chart.title,
@@ -104,7 +111,7 @@ export class ComputeService {
         data: response.data.map((item) => ({
           id: item.id,
           value: Number(item.value),
-          color: getPastelColor(item.id),
+          color: colors[item.id],
         })),
         sqlQuery: chart.sqlQuery,
       };
