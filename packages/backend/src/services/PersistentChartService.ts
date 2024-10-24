@@ -4,12 +4,22 @@ import { CachingService } from "./CachingService";
 export class PersistentChartService {
   constructor(private cachingService: CachingService) {}
 
-  async saveChart(chartId: string) {
+  async pinUnpinChart(chartId: string) {
     const cachedChart = this.cachingService.get(`chart:${chartId}`);
 
     if (!cachedChart) return null;
 
-    await this.cachingService.set(`customer:charts:${chartId}`, chartId);
+    const alreadyCachedForCustomer = await this.cachingService.get(
+      `customer:charts:${chartId}`
+    );
+
+    if (alreadyCachedForCustomer) {
+      // Un pin
+      await this.cachingService.remove(`customer:charts:${chartId}`);
+    } else {
+      // Pin
+      await this.cachingService.set(`customer:charts:${chartId}`, chartId);
+    }
   }
 
   async getChartData(chartId: string): Promise<PersistentChart> {

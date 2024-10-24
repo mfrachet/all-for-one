@@ -1,12 +1,12 @@
 import { ActionFunction, redirect } from "react-router-dom";
-import { saveChart } from "../modules/charts/services/saveChart";
+import { pinUnpinChart } from "../modules/charts/services/pinUnpinChart";
 
-export const saveChartAction: ActionFunction = async ({ request }) => {
+export const pinUnpinChartAction: ActionFunction = async ({ request }) => {
   const formData = await request.formData();
 
   const chartId = formData.get("chartId")?.toString() ?? "";
 
-  await saveChart(chartId);
+  await pinUnpinChart(chartId);
 
   return redirect("/");
 };

@@ -1,4 +1,4 @@
-export const saveChart = async (chartId: string) => {
+export const pinUnpinChart = async (chartId: string) => {
   const response = await fetch(`http://localhost:3000/charts/${chartId}`, {
     method: "POST",
     headers: {

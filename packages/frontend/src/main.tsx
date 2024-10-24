@@ -10,12 +10,12 @@ import { queryClient } from "./modules/misc/queryClient";
 import { DashboardRoot, rootLoader } from "./pages/root";
 import { DashboardIndex } from "./pages";
 import { LoginPage } from "./pages/login";
-import { saveChartAction } from "./actions/saveChartAction";
+import { pinUnpinChartAction } from "./actions/pinUnpinChartAction";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    action: saveChartAction,
+    action: pinUnpinChartAction,
     loader: rootLoader,
     element: <DashboardRoot />,
     children: [

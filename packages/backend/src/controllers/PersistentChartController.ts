@@ -8,8 +8,8 @@ export class PersistentChartController {
     private computeService: ComputeService
   ) {}
 
-  saveChart(chartId: string) {
-    return this.persistentChartService.saveChart(chartId);
+  pinUnpinChart(chartId: string) {
+    return this.persistentChartService.pinUnpinChart(chartId);
   }
 
   async getCharts() {

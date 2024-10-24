@@ -17,4 +17,8 @@ export class CachingService {
         value,
       }));
   }
+
+  async remove(key: string) {
+    delete this.cache[key];
+  }
 }

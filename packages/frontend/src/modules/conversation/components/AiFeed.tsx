@@ -1,5 +1,5 @@
+import { ChartFactory } from "../../../components/ChartFactory";
 import { Message } from "../../../components/Message";
-import { MessageFactory } from "../../../components/MessageFactory";
 import { QuestionInput } from "../../../components/QuestionInput";
 import { Spinner } from "../../../components/Spinner";
 import { useScrollDown } from "../../misc/hooks/useScrollDown";
@@ -21,7 +21,13 @@ export const AiFeed = ({ emptyState }: AiFeedProps) => {
         <ol className="flex flex-col gap-4">
           {messages.map((message) => (
             <li key={message.id} className="block w-full">
-              <MessageFactory message={message} />
+              {message.isResponse ? (
+                <Message isResponse>
+                  <ChartFactory chart={message} />
+                </Message>
+              ) : message.type === "paragraph" ? (
+                <Message isResponse={false}>{message.data}</Message>
+              ) : null}
             </li>
           ))}
         </ol>

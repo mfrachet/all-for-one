@@ -44,7 +44,7 @@ app.post("/compute/:id", async (req, res) => {
 app.post("/charts/:id", async (req, res) => {
   const chartId = req.params.id;
 
-  await persistentChartController.saveChart(chartId);
+  await persistentChartController.pinUnpinChart(chartId);
 
   res.status(201).end();
 });
