@@ -46,6 +46,7 @@ export class ComputeService {
         type: "paragraph",
         color: getPastelColor(chart.title),
         data: response?.data[0]?.text ?? "No data found",
+        sqlQuery: chart.sqlQuery,
       };
       return [paragraphOutput];
     }

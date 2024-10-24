@@ -11,7 +11,7 @@ CREATE TABLE all.subscriptions (metadata String, canceled_at Nullable(DateTime),
 Customer table has a property called subscriptions but it is better to join with the subscriptions table instead using the customer id.
 Each subscription has a property called items that is an array of strings, each string is the id of a subscription item.
 Each subscription item has a property called price that is a string containing a JSON object that has an id pointing to the price id and product that points to the product id.
-If someone asks for plan, it is the same as price. So you can use the price id on the subscription items table. 
+If someone asks for plan, they probably mean product and they will usually search using the product name. Also people are bad with name so not try to look for an exact match. 
 
 So for example, to get the product name, you would need to join the subscriptions table with the subscription_items table using the subscription id and then join with the products table using the product id.
 `;

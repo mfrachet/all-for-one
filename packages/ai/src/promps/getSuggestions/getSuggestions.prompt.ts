@@ -9,4 +9,6 @@ export const getSuggestionsPrompt = (input: string) => `
     You will suggest new charts name that don't exist in the input you're provided with.
     When the type is "paragraph", the result of the chart should only be one number, nothing else.
     Here are the existing charts: "${input}".
+
+    Let's keep it simple and only suggest charts that are easy to understand and compute. For example total number of customers, top products, customers by country, etc.
 `;
