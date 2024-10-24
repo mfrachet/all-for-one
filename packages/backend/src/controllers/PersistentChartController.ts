@@ -29,28 +29,33 @@ export class PersistentChartController {
   }
 
   async getSuggestions() {
-    const chartsIds = await this.persistentChartService.getChartIds();
+    try {
+      const chartsIds = await this.persistentChartService.getChartIds();
 
-    const chartsData = await Promise.all(
-      chartsIds.map((chartId) =>
-        this.persistentChartService.getChartData(chartId)
-      )
-    );
+      const chartsData = await Promise.all(
+        chartsIds.map((chartId) =>
+          this.persistentChartService.getChartData(chartId)
+        )
+      );
 
-    const alreadyExistingCharts: Array<Suggestion> = chartsData.map(
-      (chart) => ({
-        title: chart!.title,
-        type: chart!.type,
-      })
-    );
+      const alreadyExistingCharts: Array<Suggestion> = chartsData.map(
+        (chart) => ({
+          title: chart!.title,
+          type: chart!.type,
+        })
+      );
 
-    const response = await getOpenAIResponse(
-      getSuggestionsPrompt(
-        alreadyExistingCharts.map((chart) => chart.title).join(", ")
-      ),
-      []
-    );
+      const response = await getOpenAIResponse(
+        getSuggestionsPrompt(
+          alreadyExistingCharts.map((chart) => chart.title).join(", ")
+        ),
+        []
+      );
 
-    return JSON.parse(response || "[]");
+      return JSON.parse(response || "[]");
+    } catch (e) {
+      console.error(e);
+      return [];
+    }
   }
 }

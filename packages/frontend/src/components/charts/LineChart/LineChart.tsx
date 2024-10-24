@@ -4,9 +4,7 @@ import { AxisTickSize, AxisTickPadding } from "./constants";
 import { Tooltip } from "./Tooltip";
 import { ActivePoint } from "./ActivePoint";
 import { customizedTheme } from "./styles";
-import { capitalize } from "../../../modules/misc/helpers/capitalize";
 import { formatDate } from "../../../modules/misc/helpers/formatDate";
-import { isDate } from "../../../modules/misc/helpers/isDate";
 
 export interface LineChartProps {
   data: LineSvgProps["data"];
@@ -27,7 +25,7 @@ export const LineChart = ({ data }: LineChartProps) => {
       data={mappedData}
       curve="monotoneX"
       lineWidth={2}
-      margin={{ top: margin, right: margin, bottom: margin + 16, left: margin }}
+      margin={{ top: margin, right: margin, bottom: margin + 30, left: margin }}
       xScale={{ type: "time" }}
       yScale={{
         type: "linear",
@@ -41,6 +39,7 @@ export const LineChart = ({ data }: LineChartProps) => {
       axisBottom={{
         tickSize: AxisTickSize,
         tickPadding: AxisTickPadding,
+        tickRotation: -45,
         tickValues: 8,
         format: (value) => formatDate(value),
       }}
