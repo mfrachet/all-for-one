@@ -49,12 +49,12 @@ export type PersistentChart = {
   id: string;
   title: string;
   sqlQuery: string;
-  type: "lineChart" | "pieChart" | "paragraph";
+  type: "lineChart" | "pieChart" | "paragraph" | "mapChart";
 };
 
 export type Suggestion = {
   title: string;
-  type: "lineChart" | "pieChart" | "paragraph";
+  type: "lineChart" | "pieChart" | "paragraph" | "mapChart";
 };
 
 export type ConversationEntry = FormattedResponse & { isResponse?: boolean };
