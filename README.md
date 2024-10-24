@@ -23,7 +23,7 @@ $ docker run meltano/meltano --version
 
 // install meltano dependencies
 cd meltano_project
-docker run --rm -v $(pwd):/project -w /project meltano/meltano install
-docker run -rm -v $(pwd):/project -w /project meltano/meltano run tap-stripe target-clickhouse
+docker run --rm --net=host -v $(pwd):/project -w /project meltano/meltano install
+docker run --rm --net=host -v $(pwd):/project -w /project meltano/meltano run tap-stripe target-clickhouse
 
 ```
