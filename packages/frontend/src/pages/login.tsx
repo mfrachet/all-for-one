@@ -22,7 +22,7 @@ export const LoginPage = () => {
   }, []);
 
   return (
-    <main className="flex justify-center items-center h-full relative">
+    <main className="flex justify-center items-center h-full relative w-full">
       <div>
         <div
           className={`transition-all duration-1000 absolute inset-0 z-10 ${
@@ -31,7 +31,9 @@ export const LoginPage = () => {
         />
         <img
           src={crewSrc}
-          className={"animate-unscale fixed inset-0 object-cover scale-110"}
+          className={
+            "animate-unscale fixed inset-0 w-full h-full object-cover scale-110"
+          }
         />
       </div>
 
