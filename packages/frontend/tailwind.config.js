@@ -18,7 +18,7 @@ export default {
       },
       animation: {
         fadeIn: "fadeIn 0.5s ease-in-out forwards",
-        unscale: "unscale 2s ease-in-out forwards",
+        unscale: "unscale 5s ease-in-out forwards",
       },
     },
   },

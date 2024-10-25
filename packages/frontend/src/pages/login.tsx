@@ -3,9 +3,12 @@ import { useNavigate } from "react-router-dom";
 import googleSrc from "../assets/google.png";
 import crewSrc from "../assets/crew.webp";
 import { useEffect, useState } from "react";
+import { useAudio } from "../modules/misc/hooks/useAudio";
 
 export const LoginPage = () => {
   const navigate = useNavigate();
+  const [shouldStart, setShouldStart] = useState(false);
+  const { ready } = useAudio("/shire.mp3", shouldStart);
 
   const [shouldAnimate, setShouldAnimate] = useState(false);
 
@@ -16,10 +19,24 @@ export const LoginPage = () => {
   };
 
   useEffect(() => {
+    if (!ready) return;
+
     setTimeout(() => {
       setShouldAnimate(true);
-    }, 2000);
-  }, []);
+    }, 6000);
+  }, [ready]);
+
+  if (!ready)
+    return (
+      <div className="flex justify-center items-center h-full w-full">
+        <button
+          className="bg-gray-100 border border-gray-400 rounded-md p-2 hover:bg-gray-200 active:bg-gray-300"
+          onClick={() => setShouldStart(true)}
+        >
+          👋 Team ! Should we start?
+        </button>
+      </div>
+    );
 
   return (
     <main className="flex justify-center items-center h-full relative w-full">
@@ -39,7 +56,7 @@ export const LoginPage = () => {
 
       <div
         className="w-96 relative z-20 animate-fadeIn opacity-0"
-        style={{ animationDelay: "2.5s" }}
+        style={{ animationDelay: "8s" }}
       >
         <h1 className="text-7xl font-bold text-center pb-4 text-white drop-shadow-md">
           All for One
