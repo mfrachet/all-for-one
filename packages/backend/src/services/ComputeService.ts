@@ -56,16 +56,18 @@ export class ComputeService {
     }
 
     if (response.type === "lineChart") {
-      const groupedByKey = response.data.reduce((acc, item) => {
-        acc[item.groupingKey ?? chart.title] = [
-          ...(acc[item.groupingKey ?? chart.title] || []),
-          {
-            x: item.x,
-            y: item.y,
-          },
-        ];
-        return acc;
-      }, {} as Record<string, Array<{ x: number | string | Date; y: number }>>);
+      const groupedByKey = response.data
+        .sort((a, b) => new Date(a.x).getTime() - new Date(b.x).getTime())
+        .reduce((acc, item) => {
+          acc[item.groupingKey ?? chart.title] = [
+            ...(acc[item.groupingKey ?? chart.title] || []),
+            {
+              x: item.x,
+              y: item.y,
+            },
+          ];
+          return acc;
+        }, {} as Record<string, Array<{ x: number | string | Date; y: number }>>);
 
       const colors = getPasterColorsForTitles(Object.keys(groupedByKey));
       const lineChartOutput: LineChartOutput = {
