@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "import-mixpanel": "tsx importFromMixpanel.ts",
-    "remove-duplicates": "tsx removeDuplicates.ts"
+    "remove-duplicates": "tsx removeDuplicates.ts",
+    "normalize-data": "tsx normalizeData.ts"
   },
   "keywords": [],
   "author": "",
