@@ -55,6 +55,7 @@ export type TableOutput = {
   title: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data: Array<Record<string, any>>;
+  sqlQuery?: string;
 };
 
 export type ConversationResponse =
