@@ -54,7 +54,7 @@ export const ChartFactory = ({ chart }: ChartFactoryProps) => {
         )}
       </>
 
-      {["lineChart", "pieChart", "mapChart"].includes(chart.type) && (
+      {["lineChart", "pieChart", "paragraph"].includes(chart.type) && (
         <div className="absolute right-0 top-0 -translate-y-1/2 translate-x-1/2">
           <PinButton isLoading={isSubmitPending} chartId={chart.id} />
         </div>
