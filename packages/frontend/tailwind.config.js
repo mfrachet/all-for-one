@@ -7,6 +7,10 @@ export default {
         sans: ["'Inter Variable'", "sans-serif"],
       },
       keyframes: {
+        unscale: {
+          "0%": { transform: "scale(1.1)" },
+          "100%": { transform: "scale(1)" },
+        },
         fadeIn: {
           "0%": { opacity: "0" },
           "100%": { opacity: "1" },
@@ -14,6 +18,7 @@ export default {
       },
       animation: {
         fadeIn: "fadeIn 0.5s ease-in-out forwards",
+        unscale: "unscale 2s ease-in-out forwards",
       },
     },
   },
