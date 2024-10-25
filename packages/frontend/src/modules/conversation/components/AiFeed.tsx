@@ -24,7 +24,7 @@ export const AiFeed = ({ emptyState }: AiFeedProps) => {
               {message.isResponse ? (
                 <Message isResponse>
                   <ChartFactory chart={message} />
-                  <Code sqlQuery={message.sqlQuery} />
+                  {message.sqlQuery && <Code sqlQuery={message.sqlQuery} />}
                 </Message>
               ) : message.type === "paragraph" ? (
                 <Message isResponse={false}>{message.data}</Message>
