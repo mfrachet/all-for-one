@@ -1,6 +1,7 @@
 import { ChevronRightIcon, ClipboardIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { codeToHtml } from "shiki";
+import { formatSQL } from "../../misc/helpers/formatSql";
 
 export const Code = ({ sqlQuery }: { sqlQuery: string }) => {
   const [html, setHtml] = useState("");
@@ -11,7 +12,7 @@ export const Code = ({ sqlQuery }: { sqlQuery: string }) => {
   };
 
   useEffect(() => {
-    codeToHtml(sqlQuery, {
+    codeToHtml(formatSQL(sqlQuery), {
       lang: "sql",
       theme: "github-dark",
     }).then(setHtml);
